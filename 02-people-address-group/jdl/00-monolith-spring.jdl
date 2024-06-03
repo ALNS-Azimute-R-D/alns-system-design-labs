@@ -1,0 +1,41 @@
+/*
+ * Create the Monolith App
+ */
+
+
+application {
+  config {
+    applicationType monolith
+    baseName NexusgeoFakeFullstack05SpringReactNative
+    packageName ge.nexus.ciam.miscelaneous.clientapps.fakeuiapps.springreactnative
+    serverPort 9084
+    buildTool maven
+    authenticationType oauth2
+    serviceDiscoveryType no
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache true
+    cacheProvider ehcache
+    // messageBroker kafka
+    clientFramework angularX
+    clientTheme united
+    clientThemeVariant dark
+    enableTranslation true
+    nativeLanguage en
+    languages [pt-br, en, de, es, fr, ru]
+    testFrameworks [cypress, gatling]
+    skipClient true
+    skipServer false
+    skipUserManagement false
+  }
+  entities *
+}
+
+
+
+deployment {
+  deploymentType docker-compose
+  dockerRepositoryName "scout23df"
+  monitoring no
+}

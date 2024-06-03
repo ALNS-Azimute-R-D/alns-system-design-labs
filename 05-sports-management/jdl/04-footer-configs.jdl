@@ -1,0 +1,13 @@
+/*
+ * Create the Footer Settings
+*/
+
+service * with serviceImpl
+dto * with mapstruct
+
+
+filter Country, Province, TownCity, District, Partner, Person, Specie, Trip, Sighting, Asset
+
+
+paginate * with pagination
+

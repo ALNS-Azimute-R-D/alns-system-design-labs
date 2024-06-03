@@ -1,0 +1,84 @@
+/** *************************************
+/* Microservice: 02 - OrganizationalStructure
+/* --> 
+/* ************************************* */
+
+
+/**
+ * - Tenant
+ * - TypeOfOrganization
+ * - Organization
+ * - BusinessUnit
+*/
+
+entity Tenant(tb_tenant) {
+    acronym String required maxlength(20)
+    name String required maxlength(128)
+    description String required maxlength(255)
+    businessHandlerClazz String maxlength(512)
+    mainContactPesonDetails TextBlob
+    billingDetails TextBlob
+    technicalEnvironmentsDetails TextBlob
+    commonCustomAttributesDetails TextBlob
+    logoImg ImageBlob
+    activationStatus ActivationStatusEnum required
+}
+
+entity TypeOfOrganization(tb_type_organization) {
+    acronym String required maxlength(20)
+    name String required maxlength(255)
+    description TextBlob required
+    businessHandlerClazz String maxlength(512)    
+}
+
+entity Organization(tb_organization) {
+    acronym String required maxlength(20)
+    hierarchicalLevel String maxlength(30)
+    name String required minlength(2) maxlength(255)
+    description String required maxlength(512)
+    businessHandlerClazz String maxlength(512)
+    mainContactPesonDetails TextBlob
+    technicalEnvironmentsDetails TextBlob
+    commonCustomAttributesDetails TextBlob
+    organizationStatus OrganizationStatusEnum required
+    businessHandlerClazz String maxlength(512)
+    activationStatus ActivationStatusEnum required
+    logoImg ImageBlob
+}
+
+entity OrganizationDomain(tb_organization_domain) {
+    domainAcronym String required maxlength(255)
+    name String required minlength(2) maxlength(255)
+    isVerified Boolean required
+    businessHandlerClazz String maxlength(512)
+    activationStatus ActivationStatusEnum required
+}
+
+entity BusinessUnit(tb_business_unit) {
+    acronym String required maxlength(20)
+    hierarchicalLevel String maxlength(30)
+    name String required minlength(2) maxlength(120)
+    activationStatus ActivationStatusEnum required
+}
+
+
+
+enum OrganizationStatusEnum {
+    UNDER_EVALUATION, ONBOARDING, READY_TO_START, WORKING, PENDENT, IN_FAILURE
+}
+
+enum ActivationStatusEnum {
+    INACTIVE, ACTIVE, ON_HOLD, PENDENT, BLOCKED, INVALID
+}
+
+relationship ManyToOne {
+    Organization{tenant(name) required} to Tenant{organizationsList},
+    Organization{typeOfOrganization(name) required} to TypeOfOrganization{organizationsList},
+    OrganizationDomain{organization(name) required} to Organization{organizationDomainsList},
+    BusinessUnit{organization(name) required} to Organization{businessesUnitsList},
+
+    Organization{organizationParent(name)} to Organization{childrenOrganizationsList}
+    BusinessUnit{BusinessUnitParent(name)} to BusinessUnit{childrenBusinessUnitsList}
+}
+
+

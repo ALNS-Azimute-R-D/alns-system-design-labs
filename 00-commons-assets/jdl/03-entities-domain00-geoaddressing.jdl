@@ -1,0 +1,61 @@
+/** *************************************
+/* Microservice: 01 - msrvc01GeoAddressing
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Country 
+ * - Province
+ * - TownCity 
+ * - District
+ * - Locality
+*/
+
+
+entity Country(tb_country) {
+    acronym String required maxlength(3)
+    name String required maxlength(40)
+    continent ContinentEnum required
+    geoPolygonArea AnyBlob
+}
+
+
+entity Province(tb_province) {
+    acronym String required maxlength(3)
+    name String required maxlength(40)
+    geoPolygonArea AnyBlob
+}
+
+entity TownCity(tb_town_city) {
+    acronym String required maxlength(8)
+    name String required maxlength(40)
+    geoPolygonArea AnyBlob
+}
+
+entity District(tb_district) {
+    acronym String required maxlength(8)
+    name String required maxlength(40)
+    geoPolygonArea AnyBlob
+}
+
+entity Locality(tb_locality) {
+    acronym String required maxlength(8)
+    name String required maxlength(840)
+    description TextBlob
+    geoPolygonArea AnyBlob
+}
+
+enum ContinentEnum {
+    AFRICA, ASIA, EUROPE, OCEANIA, CENTRAL_AMERICA, NORTH_AMERICA, SOUTH_AMERICA
+}
+
+
+relationship ManyToOne {
+    Province{country(name) required} to Country{provinces},
+    TownCity{province(name) required} to Province{townCities},
+    District{townCity(name) required} to TownCity{districts},
+    Locality{country(name) required} to Country{localities}
+}
+
+

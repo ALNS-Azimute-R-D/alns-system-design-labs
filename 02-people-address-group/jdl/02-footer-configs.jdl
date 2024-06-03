@@ -1,0 +1,12 @@
+/*
+ * Create the Footer Settings
+*/
+
+service * with serviceImpl
+dto * with mapstruct
+
+filter Country, Province, TownCity, District, Customer, Department, Person, GroupMembershipDetails
+
+paginate Country, Province, TownCity, District, Customer, CustomerType, Department, PersonType, Person, GroupMembershipDetails  with pagination
+
+skipClient * except Country, Province, TownCity, District, Customer, CustomerType, Department, PersonType, Person, GroupMembershipDetails

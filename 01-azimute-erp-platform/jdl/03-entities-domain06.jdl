@@ -1,0 +1,96 @@
+/** *************************************
+/* Microservice: 06 - msrvc06JourneyRouting
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeJourney 
+ * - TransportOperator
+ * - Journey
+ * - RouteLeg
+ * - LocationNode 
+*/
+
+
+entity TypeJourney(tb_type_journey) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+
+
+entity TransportOperator(tb_transport_operator) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    organizationId Long
+}
+
+
+entity Journey(tb_journey) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    userUUID String maxlength(255)
+    status JourneyStatusEnum required
+    extraDetails TextBlob
+}
+
+
+entity RouteLeg(tb_route_leg) {
+    name String required maxlength(255)
+    sequenceNumber Integer
+    meansOfTransportation MeansOfTransportationEnum required
+    distanceInKm Double
+    estimatedDepartureTime Instant
+    estimatedArrivalTime Instant    
+    isDelayed Boolean
+    realDepartureTime Instant
+    realArrivalTime Instant    
+    dueCostValue BigDecimal
+}
+
+
+entity LocationNode(tb_location) {
+    name String required maxlength(255)
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    zipPostalCode String maxlength(15),
+    townCity Long,
+    stateProvince Long,
+    countryRegion String maxlength(50),
+    geoPointLocation AnyBlob,
+    extraDetails TextBlob
+}
+
+
+
+
+
+enum JourneyStatusEnum {
+    ENABLED, DISABLED, DELETED
+}
+
+enum MeansOfTransportationEnum {
+    BY_WALKING, BY_BIKE, BY_CAR, BY_BUS, BY_SUBWAY, BY_METRO_TRAIN, BY_REGIONAL_TRAIN, BY_HIGH_VELOCITY_TRAIN, BY_AIRPLANE_FLIGHT, BY_SHIP_RIVER, BY_SHIP_SEA, BY_OTHERS
+}
+
+
+
+
+
+relationship ManyToOne {
+    Journey{typeJourney(acronym)} to TypeJourney{journeysList},
+
+    RouteLeg{transportOperator(acronym)} to TransportOperator{routesLegsList},
+
+    RouteLeg{journeyFrom(acronym) required} to Journey{fromRoutesLegsList},
+    RouteLeg{journeyTo(acronym) required} to Journey{toRoutesLegsList},
+
+    LocationNode{routeLegFrom(name) required} to RouteLeg{fromLocationsNodesList},
+    LocationNode{routeLegTo(name) required} to RouteLeg{toLocationsNodesList}
+}
+

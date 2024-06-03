@@ -1,0 +1,79 @@
+/** *************************************
+/* Microservice: 07 - mnctnpMcs07MediaHandling
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - RawAssetProcTmp 
+ * - AssetType
+ * - Asset
+ * - AssetMetadata
+*/
+
+entity AssetType(tb_type_asset) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+    extraDetails TextBlob
+}
+
+entity RawAssetProcTmp(tb_raw_asset_proc_tmp) {
+    name String required maxlength(255)
+    statusRawProcessing StatusRawProcessingEnum
+    fullFilenamePath String maxlength(512)
+    assetRawContentAsBlob Blob
+    extraDetails TextBlob
+}
+
+entity Asset(tb_asset) {
+    uid UUID
+    name String required maxlength(255)
+    storageTypeUsed StorageTypeEnum
+    fullFilenamePath String maxlength(512)
+    status StatusAssetEnum
+    preferredPurpose PreferredPurposeEnum
+    assetContentAsBlob Blob
+}
+
+entity AssetMetadata(tb_asset_metadata) {
+    metadataDetails TextBlob
+}
+
+
+
+enum StatusRawProcessingEnum {
+    UPLOADING, UPLOADED, WAITING_FOR_PROCESSING, PROCESSING, DONE, FAILURE
+}
+
+enum StorageTypeEnum {
+    BLOB_IN_DB, LOCAL_FILESYSTEM, LOCAL_MINIO, REMOTE_FILESYSTEM, REMOTE_MINIO, AWS_S3, OTHER_CLOUD_STORAGE
+}
+
+enum StatusAssetEnum {
+    ENABLED, DISABLED, DELETED
+}
+
+enum PreferredPurposeEnum {
+    USER_AVATAR, MONICET_ALBUM, OTHER
+}
+
+
+
+
+
+relationship ManyToOne {
+    RawAssetProcTmp{assetType(name) required} to AssetType{rawAssetsProcsTmps},
+    Asset{assetType(name) required} to AssetType{assets},
+    Asset{rawAssetProcTmp(name)} to RawAssetProcTmp{assets}
+}
+
+relationship OneToOne {
+    AssetMetadata{asset(name) required} to Asset{assetMetadata}
+}
+
+relationship ManyToMany {
+    Asset{assetsAlbumsSpecies} to AssetsAlbumSpecie{assets}
+    Asset{assetsAlbumsSightings} to AssetsAlbumSighting{assets}    
+}

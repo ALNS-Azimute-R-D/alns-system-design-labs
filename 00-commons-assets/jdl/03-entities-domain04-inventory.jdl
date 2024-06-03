@@ -1,0 +1,121 @@
+/** *************************************
+/* Microservice: 04 - msrvc04Inventory
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Warehouse 
+ * - Supplier 
+ * - Brand
+ * - Product
+ * - InventoryTransaction
+ * - StockLevel
+*/
+
+
+
+entity Warehouse(tb_warehouse) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    pointLocation AnyBlob
+    mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    faxNumber String maxlength(15)
+    extraDetails TextBlob    
+}
+
+
+
+entity Supplier(tb_supplier) {
+    acronym String required maxlength(50)
+    companyName String required minlength(2) maxlength(120)
+    representativeLastName String maxlength(50),
+    representativeFirstName String maxlength(50),
+    jobTitle String maxlength(50),
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    city String maxlength(50),
+    stateProvince String maxlength(50),
+    zipPostalCode String maxlength(15),
+    countryRegion String maxlength(50),
+    webPage TextBlob,
+    pointLocation AnyBlob
+    mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    faxNumber String maxlength(15)
+    extraDetails TextBlob    
+}
+
+
+
+entity Brand(tb_brand) {
+    acronym String required maxlength(20)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+}
+
+
+
+entity Product(tb_product) {
+    productSKU String maxlength(25),
+    productName String maxlength(50),
+    description TextBlob,
+    standardCost BigDecimal,
+    listPrice BigDecimal required,
+    reorderLevel Integer,
+    targetLevel Integer,
+    quantityPerUnit String maxlength(50),
+    discontinued Boolean required,
+    minimumReorderQuantity Integer,
+    suggestedCategory String maxlength(50),
+    attachments Blob,
+    supplierIds TextBlob    
+}
+
+
+
+entity InventoryTransaction(tb_inventory_transaction) {
+    invoiceId Long required, 
+    transactionCreatedDate Instant,
+    transactionModifiedDate Instant,
+    quantity Integer required,
+    comments String maxlength(255)
+}
+
+
+
+entity StockLevel(tb_stock_level) {
+    lastModifiedDate Instant required,
+    ramainingQuantity Integer required,
+    extraDetails TextBlob
+}
+
+
+
+
+
+
+relationship ManyToOne {
+    Product{brand(acronym) required} to Brand{productsList},
+    InventoryTransaction{supplier(acronym) required} to Supplier{inventoryTransactionsList},
+    InventoryTransaction{product(productName) required} to Product{productsList},
+    InventoryTransaction{warehouse(acronym) required} to Warehouse{inventoryTransactionsList},
+    StockLevel{warehouse(acronym) required} to Warehouse{stockLevelsList},
+    StockLevel{product(productName) required} to Product{stockLevelsList}
+}
+
+
+relationship ManyToMany {
+    Supplier{productsList} to Product(productsList}
+}
+
+

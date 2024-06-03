@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.3-alpha" last-position="0,0" last-zoom="0.45" max-obj-count="42"
+	 default-schema="public" default-owner="postgres"
+	 layers="New layer" active-layers="0;1">
+<role name="dbamaster01"
+      superuser="true"
+      inherit="true"
+      login="true"
+      encrypted="true"
+      password="********">
+</role>
+
+<role name="replicator"
+      replication="true"
+      inherit="true"
+      login="true"
+      encrypted="true"
+      password="********">
+</role>
+
+<database name="DBMonicetNP" encoding="UTF8" lc-collate="C.UTF-8" lc-ctype="C.UTF-8" is-template="false" allow-conns="true">
+	<role name="dbamaster01"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" layer="0" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<extension name="postgis" cur-version="3.0.0">
+	<schema name="public"/>
+	<comment><![CDATA[PostGIS geometry, geography, and raster spatial types and functions]]></comment>
+</extension>
+
+<extension name="hstore" handles-type="true" cur-version="1.6">
+	<schema name="public"/>
+	<comment><![CDATA[data type for storing sets of (key, value) pairs]]></comment>
+</extension>
+
+<schema name="topology" layer="0" rect-visible="true" fill-color="#415a9b">
+	<role name="postgres"/>
+	<comment><![CDATA[PostGIS Topology schema]]></comment>
+</schema>
+
+<extension name="postgis_topology" cur-version="3.0.0">
+	<schema name="topology"/>
+	<comment><![CDATA[PostGIS topology spatial types and functions]]></comment>
+</extension>
+
+<extension name="postgis_raster" cur-version="3.0.0">
+	<schema name="public"/>
+	<comment><![CDATA[PostGIS raster types and functions]]></comment>
+</extension>
+
+<schema name="sch00_monolith" layer="0" rect-visible="true" fill-color="#efefef">
+	<role name="dbamaster01"/>
+</schema>
+
+<table name="databasechangeloglock" layer="0" collapse-mode="1" faded-out="true" max-obj-count="4" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3167.99" y="2063.97"/>
+	<column name="id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="locked" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="lockgranted">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="lockedby">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="databasechangeloglock_pkey" type="pk-constr" table="sch00_monolith.databasechangeloglock">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="databasechangelog" layer="0" collapse-mode="1" faded-out="true" max-obj-count="16" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3163.54" y="1735.4"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="author" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="filename" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="dateexecuted" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="orderexecuted" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="exectype" not-null="true">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="md5sum">
+		<type name="character varying" length="35"/>
+	</column>
+	<column name="description">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="comments">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="tag">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="liquibase">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="contexts">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="labels">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="deployment_id">
+		<type name="character varying" length="10"/>
+	</column>
+</table>
+
+<sequence name="sequence_generator" cycle="false" start="1050" increment="50" min-value="1" max-value="9223372036854775807" cache="1">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+</sequence>
+
+<table name="jhi_user" layer="0" collapse-mode="1" faded-out="true" max-obj-count="14" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3132.92" y="1130.04"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="login" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="first_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="last_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="email">
+		<type name="character varying" length="191"/>
+	</column>
+	<column name="image_url">
+		<type name="character varying" length="256"/>
+	</column>
+	<column name="activated" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="lang_key">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="created_by" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="created_date">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="last_modified_by">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="last_modified_date">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="jhi_user_pkey" type="pk-constr" table="sch00_monolith.jhi_user">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_user_login" type="uq-constr" table="sch00_monolith.jhi_user">
+		<columns names="login" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_user_email" type="uq-constr" table="sch00_monolith.jhi_user">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="jhi_authority" layer="0" collapse-mode="1" faded-out="true" max-obj-count="1" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3199.8" y="1640.04"/>
+	<column name="name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<constraint name="jhi_authority_pkey" type="pk-constr" table="sch00_monolith.jhi_authority">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="jhi_user_authority" layer="0" collapse-mode="1" faded-out="true" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3138.62" y="1462.42"/>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="authority_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<constraint name="jhi_user_authority_pkey" type="pk-constr" table="sch00_monolith.jhi_user_authority">
+		<columns names="user_id,authority_name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_country" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<comment><![CDATA[- Country\n- Province\n- TownCity\n- District\n- Address\n- Island\n- GeorefLocalilty]]></comment>
+	<position x="3055.78" y="26.3611"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="3"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="continent" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="geo_polygon_area">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="geo_polygon_area_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="tb_country_pkey" type="pk-constr" table="sch00_monolith.tb_country">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_province" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3071.88" y="260.361"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="3"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="geo_polygon_area">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="geo_polygon_area_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="country_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_province_pkey" type="pk-constr" table="sch00_monolith.tb_province">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_town_city" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3074.21" y="493.861"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="8"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="geo_polygon_area">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="geo_polygon_area_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="province_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_town_city_pkey" type="pk-constr" table="sch00_monolith.tb_town_city">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_district" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3072.05" y="730.861"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="8"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="geo_polygon_area">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="geo_polygon_area_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="town_city_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_district_pkey" type="pk-constr" table="sch00_monolith.tb_district">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_island" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="2577" y="257.25"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym">
+		<type name="character varying" length="8"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="geo_polygon_area">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="geo_polygon_area_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="country_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_island_pkey" type="pk-constr" table="sch00_monolith.tb_island">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_georef_locality" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="3071.78" y="951.411"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="8"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="840"/>
+	</column>
+	<column name="description">
+		<type name="text" length="0"/>
+	</column>
+	<column name="geo_polygon_area">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="geo_polygon_area_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="tb_georef_locality_pkey" type="pk-constr" table="sch00_monolith.tb_georef_locality">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_partner" layer="0" collapse-mode="1" max-obj-count="22" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<comment><![CDATA[- Partner\n- PartnerType\n- Vessel]]></comment>
+	<position x="1973.88" y="675.411"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="description">
+		<type name="text" length="0"/>
+	</column>
+	<column name="street_address" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="house_number">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="location_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="postal_code" not-null="true">
+		<type name="character varying" length="9"/>
+	</column>
+	<column name="point_location">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="point_location_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="main_email">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="land_phone_number">
+		<type name="character varying" length="15"/>
+	</column>
+	<column name="mobile_phone_number">
+		<type name="character varying" length="15"/>
+	</column>
+	<column name="fax_number">
+		<type name="character varying" length="15"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="partner_type_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="town_city_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_partner_pkey" type="pk-constr" table="sch00_monolith.tb_partner">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_type_partner" layer="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1984.9" y="1179.41"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="business_handler_clazz">
+		<type name="character varying" length="512"/>
+	</column>
+	<constraint name="tb_type_partner_pkey" type="pk-constr" table="sch00_monolith.tb_type_partner">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_vessel" layer="0" collapse-mode="1" max-obj-count="13" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1971.01" y="81.4111"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="lenght">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="height">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="weight">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="depth">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="engine_power_in_hp">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="extra_features">
+		<type name="text" length="0"/>
+	</column>
+	<column name="partner_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_vessel_pkey" type="pk-constr" table="sch00_monolith.tb_vessel">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_type_person" layer="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<comment><![CDATA[- PersonType\n- Person]]></comment>
+	<position x="73.2972" y="599.411"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="code" not-null="true">
+		<type name="character varying" length="5"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<constraint name="tb_type_person_pkey" type="pk-constr" table="sch00_monolith.tb_type_person">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_person" layer="0" collapse-mode="1" max-obj-count="31" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="607.778" y="398.861"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="first_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="last_name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="birthday" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="gender" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="code_bi">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="code_nif">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="street_address" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="house_number">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="location_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="postal_code" not-null="true">
+		<type name="character varying" length="9"/>
+	</column>
+	<column name="point_location">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="point_location_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="main_email" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="land_phone_number">
+		<type name="character varying" length="15"/>
+	</column>
+	<column name="mobile_phone_number">
+		<type name="character varying" length="15"/>
+	</column>
+	<column name="occupation">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="preferred_language">
+		<type name="character varying" length="5"/>
+	</column>
+	<column name="username_in_o_auth_2">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="user_id_in_o_auth_2">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="avatar_img">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="avatar_img_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="person_type_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="partner_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="town_city_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_person_pkey" type="pk-constr" table="sch00_monolith.tb_person">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_tb_person__main_email" type="uq-constr" table="sch00_monolith.tb_person">
+		<columns names="main_email" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_specie_family" layer="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<comment><![CDATA[- SpecieFamily\n- SpecieCatalog\n- AssetsAlbumSpecie\n- PopularName\n- IdentifiedAnimal]]></comment>
+	<position x="2613.81" y="1332.86"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="description">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="tb_specie_family_pkey" type="pk-constr" table="sch00_monolith.tb_specie_family">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_tb_specie_family__acronym" type="uq-constr" table="sch00_monolith.tb_specie_family">
+		<columns names="acronym" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_specie" layer="0" collapse-mode="1" max-obj-count="6" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="2591.24" y="1602.86"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="scientific_name" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="common_name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="specie_family_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_specie_catalog_pkey" type="pk-constr" table="sch00_monolith.tb_specie">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_tb_specie_catalog__scientific_name" type="uq-constr" table="sch00_monolith.tb_specie">
+		<columns names="scientific_name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_assets_album_specie" layer="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="2588.8" y="2028.36"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="180"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="specie_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_assets_album_specie_pkey" type="pk-constr" table="sch00_monolith.tb_assets_album_specie">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_identified_cetaceo" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="2007.18" y="1637.86"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="monicet_id">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="biological_sex">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="specie_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_identified_cetaceo_pkey" type="pk-constr" table="sch00_monolith.tb_identified_cetaceo">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_trip" layer="0" collapse-mode="1" max-obj-count="16" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<comment><![CDATA[- Trip\n- TripMonicetPerson\n- TripEventPosition\n- Sighting\n- AtmosphericInfo\n- AssetsAlbumSighting]]></comment>
+	<position x="1277.78" y="45.7111"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="scheduled_datetime" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="number_passagers">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="route_history">
+		<type name="text" length="0"/>
+	</column>
+	<column name="trip_start">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="trip_end">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="duration_in_sec">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="average_knots">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="max_knots">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="status" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="partner_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="vessel_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_trip_pkey" type="pk-constr" table="sch00_monolith.tb_trip">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_trip_monicet_person" layer="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="635.47" y="96.7111"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="person_role_in_trip" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="trip_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="person_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_trip_monicet_person_pkey" type="pk-constr" table="sch00_monolith.tb_trip_monicet_person">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_trip_event_position" layer="0" collapse-mode="1" max-obj-count="15" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1268.88" y="561.711"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="trip_event_type" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="point_location">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="point_location_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="trip_start">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="trip_end">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="duration_in_sec">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="distance_to_coast_in_m">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="sea_depth_at_position">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="sea_slope_in_radians">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="trip_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_trip_event_position_pkey" type="pk-constr" table="sch00_monolith.tb_trip_event_position">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_sighting" layer="0" collapse-mode="1" max-obj-count="13" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1275.91" y="1017.71"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="sighting_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="sighting_start">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="sighting_end">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="qty_boats_present">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="sighting_sureness">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="monicet_behavior_detected">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="atmospheric_info_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="trip_event_position_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_sighting_pkey" type="pk-constr" table="sch00_monolith.tb_sighting">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_tb_sighting__atmospheric_info_id" type="uq-constr" table="sch00_monolith.tb_sighting">
+		<columns names="atmospheric_info_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="rel_tb_sighting__species" layer="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="2045.69" y="1451.71"/>
+	<column name="species_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tb_sighting_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="rel_tb_sighting__species_pkey" type="pk-constr" table="sch00_monolith.rel_tb_sighting__species">
+		<columns names="tb_sighting_id,species_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="rel_tb_sighting__identifieds_cetaceos" layer="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1344.78" y="1457.16"/>
+	<column name="identifieds_cetaceos_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tb_sighting_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="rel_tb_sighting__identifieds_cetaceos_pkey" type="pk-constr" table="sch00_monolith.rel_tb_sighting__identifieds_cetaceos">
+		<columns names="tb_sighting_id,identifieds_cetaceos_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_atmospheric_info" layer="0" collapse-mode="1" max-obj-count="8" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="620.349" y="1026.16"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="sea_state" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="visibility_state">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="weather_condition">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="temperature_in_celsius">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="water_temperature_in_celsius">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="tb_atmospheric_info_pkey" type="pk-constr" table="sch00_monolith.tb_atmospheric_info">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_assets_album_sighting" layer="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="741.994" y="1459.16"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="sighting_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_assets_album_sighting_pkey" type="pk-constr" table="sch00_monolith.tb_assets_album_sighting">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_type_asset" layer="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<comment><![CDATA[- RawAssetProcTmp\n- AssetType\n- Asset\n- AssetMetadata]]></comment>
+	<position x="69.8466" y="2022.16"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acronym">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="description">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="handler_clazz_name">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="tb_type_asset_pkey" type="pk-constr" table="sch00_monolith.tb_type_asset">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_raw_asset_proc_tmp" layer="0" collapse-mode="1" max-obj-count="9" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="12.7108" y="1681.16"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="status_raw_processing">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="full_filename_path">
+		<type name="character varying" length="512"/>
+	</column>
+	<column name="asset_raw_content_as_blob">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="asset_raw_content_as_blob_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="extra_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="asset_type_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_raw_asset_proc_tmp_pkey" type="pk-constr" table="sch00_monolith.tb_raw_asset_proc_tmp">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_asset" layer="0" collapse-mode="1" max-obj-count="13" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="673.778" y="1940.41"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="uid">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="storage_type_used">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="full_filename_path">
+		<type name="character varying" length="512"/>
+	</column>
+	<column name="status">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="preferred_purpose">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="asset_content_as_blob">
+		<type name="bytea" length="0"/>
+	</column>
+	<column name="asset_content_as_blob_content_type">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="asset_type_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="raw_asset_proc_tmp_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_asset_pkey" type="pk-constr" table="sch00_monolith.tb_asset">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="rel_tb_asset__assets_albums_species" layer="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1980.97" y="2032.41"/>
+	<column name="assets_albums_species_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tb_asset_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="rel_tb_asset__assets_albums_species_pkey" type="pk-constr" table="sch00_monolith.rel_tb_asset__assets_albums_species">
+		<columns names="tb_asset_id,assets_albums_species_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="rel_tb_asset__assets_albums_sightings" layer="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="740.604" y="1691.41"/>
+	<column name="assets_albums_sightings_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tb_asset_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="rel_tb_asset__assets_albums_sightings_pkey" type="pk-constr" table="sch00_monolith.rel_tb_asset__assets_albums_sightings">
+		<columns names="tb_asset_id,assets_albums_sightings_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_asset_metadata" layer="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="sch00_monolith"/>
+	<role name="dbamaster01"/>
+	<position x="1268.72" y="1868.41"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="metadata_details">
+		<type name="text" length="0"/>
+	</column>
+	<column name="asset_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_asset_metadata_pkey" type="pk-constr" table="sch00_monolith.tb_asset_metadata">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ux_tb_asset_metadata__asset_id" type="uq-constr" table="sch00_monolith.tb_asset_metadata">
+		<columns names="asset_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk_authority_name" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.jhi_authority" table="sch00_monolith.jhi_user_authority">
+	<columns names="authority_name" ref-type="src-columns"/>
+	<columns names="name" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.jhi_user" table="sch00_monolith.jhi_user_authority">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_province__country_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_country" table="sch00_monolith.tb_province">
+	<columns names="country_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_town_city__province_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_province" table="sch00_monolith.tb_town_city">
+	<columns names="province_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_district__town_city_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_town_city" table="sch00_monolith.tb_district">
+	<columns names="town_city_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_island__country_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_country" table="sch00_monolith.tb_island">
+	<columns names="country_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_partner__partner_type_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_type_partner" table="sch00_monolith.tb_partner">
+	<columns names="partner_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_partner__town_city_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_town_city" table="sch00_monolith.tb_partner">
+	<columns names="town_city_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_vessel__partner_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_partner" table="sch00_monolith.tb_vessel">
+	<columns names="partner_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_person__person_type_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_type_person" table="sch00_monolith.tb_person">
+	<columns names="person_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_person__partner_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_partner" table="sch00_monolith.tb_person">
+	<columns names="partner_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_person__town_city_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_town_city" table="sch00_monolith.tb_person">
+	<columns names="town_city_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_specie_catalog__specie_family_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_specie_family" table="sch00_monolith.tb_specie">
+	<columns names="specie_family_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_assets_album_specie__specie_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_specie" table="sch00_monolith.tb_assets_album_specie">
+	<columns names="specie_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_identified_cetaceo__specie_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_specie" table="sch00_monolith.tb_identified_cetaceo">
+	<columns names="specie_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_trip__partner_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_partner" table="sch00_monolith.tb_trip">
+	<columns names="partner_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_trip__vessel_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_vessel" table="sch00_monolith.tb_trip">
+	<columns names="vessel_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_trip_monicet_person__trip_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_trip" table="sch00_monolith.tb_trip_monicet_person">
+	<columns names="trip_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_trip_monicet_person__person_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_person" table="sch00_monolith.tb_trip_monicet_person">
+	<columns names="person_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_trip_event_position__trip_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_trip" table="sch00_monolith.tb_trip_event_position">
+	<columns names="trip_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_sighting__atmospheric_info_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_atmospheric_info" table="sch00_monolith.tb_sighting">
+	<columns names="atmospheric_info_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_sighting__trip_event_position_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_trip_event_position" table="sch00_monolith.tb_sighting">
+	<columns names="trip_event_position_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_sighting__species__tb_sighting_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_sighting" table="sch00_monolith.rel_tb_sighting__species">
+	<columns names="tb_sighting_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_sighting__species__species_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_specie" table="sch00_monolith.rel_tb_sighting__species">
+	<columns names="species_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_sighting__identifieds_cetaceos__tb_sighting_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_sighting" table="sch00_monolith.rel_tb_sighting__identifieds_cetaceos">
+	<columns names="tb_sighting_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_sighting__identifieds__identifieds_cetaceos_8f_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_identified_cetaceo" table="sch00_monolith.rel_tb_sighting__identifieds_cetaceos">
+	<columns names="identifieds_cetaceos_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_assets_album_sighting__sighting_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_sighting" table="sch00_monolith.tb_assets_album_sighting">
+	<columns names="sighting_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_raw_asset_proc_tmp__asset_type_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_type_asset" table="sch00_monolith.tb_raw_asset_proc_tmp">
+	<columns names="asset_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_asset__asset_type_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_type_asset" table="sch00_monolith.tb_asset">
+	<columns names="asset_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_asset__raw_asset_proc_tmp_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_raw_asset_proc_tmp" table="sch00_monolith.tb_asset">
+	<columns names="raw_asset_proc_tmp_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_asset__assets_albums_species__tb_asset_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_asset" table="sch00_monolith.rel_tb_asset__assets_albums_species">
+	<columns names="tb_asset_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_asset__assets_albums___assets_albums_species_28_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_assets_album_specie" table="sch00_monolith.rel_tb_asset__assets_albums_species">
+	<columns names="assets_albums_species_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_asset__assets_albums_sightings__tb_asset_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_asset" table="sch00_monolith.rel_tb_asset__assets_albums_sightings">
+	<columns names="tb_asset_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_rel_tb_asset__assets_albums___assets_albums_sightings_05_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_assets_album_sighting" table="sch00_monolith.rel_tb_asset__assets_albums_sightings">
+	<columns names="assets_albums_sightings_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tb_asset_metadata__asset_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="sch00_monolith.tb_asset" table="sch00_monolith.tb_asset_metadata">
+	<columns names="asset_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_jhi_user_authority_jhi_authority" type="relfk" layer="0"
+	 custom-color="#0511a4" faded-out="true"
+	 src-table="sch00_monolith.jhi_user_authority"
+	 dst-table="sch00_monolith.jhi_authority" reference-fk="fk_authority_name"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_jhi_user_authority_jhi_user" type="relfk" layer="0"
+	 custom-color="#f1d5c5" faded-out="true"
+	 src-table="sch00_monolith.jhi_user_authority"
+	 dst-table="sch00_monolith.jhi_user" reference-fk="fk_user_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_province_tb_country" type="relfk" layer="0"
+	 custom-color="#829bc8"
+	 src-table="sch00_monolith.tb_province"
+	 dst-table="sch00_monolith.tb_country" reference-fk="fk_tb_province__country_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_town_city_tb_province" type="relfk" layer="0"
+	 custom-color="#7137eb"
+	 src-table="sch00_monolith.tb_town_city"
+	 dst-table="sch00_monolith.tb_province" reference-fk="fk_tb_town_city__province_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_district_tb_town_city" type="relfk" layer="0"
+	 custom-color="#bd01c1"
+	 src-table="sch00_monolith.tb_district"
+	 dst-table="sch00_monolith.tb_town_city" reference-fk="fk_tb_district__town_city_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_island_tb_country" type="relfk" layer="0"
+	 custom-color="#75a84a"
+	 src-table="sch00_monolith.tb_island"
+	 dst-table="sch00_monolith.tb_country" reference-fk="fk_tb_island__country_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_partner_tb_type_partner" type="relfk" layer="0"
+	 custom-color="#4b453d"
+	 src-table="sch00_monolith.tb_partner"
+	 dst-table="sch00_monolith.tb_type_partner" reference-fk="fk_tb_partner__partner_type_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_partner_tb_town_city" type="relfk" layer="0"
+	 custom-color="#24b544"
+	 src-table="sch00_monolith.tb_partner"
+	 dst-table="sch00_monolith.tb_town_city" reference-fk="fk_tb_partner__town_city_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_vessel_tb_partner" type="relfk" layer="0"
+	 custom-color="#3964d0"
+	 src-table="sch00_monolith.tb_vessel"
+	 dst-table="sch00_monolith.tb_partner" reference-fk="fk_tb_vessel__partner_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_person_tb_type_person" type="relfk" layer="0"
+	 custom-color="#d793b7"
+	 src-table="sch00_monolith.tb_person"
+	 dst-table="sch00_monolith.tb_type_person" reference-fk="fk_tb_person__person_type_id"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="607.778" y="661.553"/>
+	</line>
+</relationship>
+
+<relationship name="rel_tb_person_tb_partner" type="relfk" layer="0"
+	 custom-color="#967dd1"
+	 src-table="sch00_monolith.tb_person"
+	 dst-table="sch00_monolith.tb_partner" reference-fk="fk_tb_person__partner_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_person_tb_town_city" type="relfk" layer="0"
+	 custom-color="#2f4bcc"
+	 src-table="sch00_monolith.tb_person"
+	 dst-table="sch00_monolith.tb_town_city" reference-fk="fk_tb_person__town_city_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_specie_catalog_tb_specie_family" type="relfk" layer="0"
+	 custom-color="#2abffb"
+	 src-table="sch00_monolith.tb_specie"
+	 dst-table="sch00_monolith.tb_specie_family" reference-fk="fk_tb_specie_catalog__specie_family_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_assets_album_specie_tb_specie_catalog" type="relfk" layer="0"
+	 custom-color="#ed73f3"
+	 src-table="sch00_monolith.tb_assets_album_specie"
+	 dst-table="sch00_monolith.tb_specie" reference-fk="fk_tb_assets_album_specie__specie_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_identified_cetaceo_tb_specie_catalog" type="relfk" layer="0"
+	 custom-color="#86823c"
+	 src-table="sch00_monolith.tb_identified_cetaceo"
+	 dst-table="sch00_monolith.tb_specie" reference-fk="fk_tb_identified_cetaceo__specie_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_trip_tb_partner" type="relfk" layer="0"
+	 custom-color="#574931"
+	 src-table="sch00_monolith.tb_trip"
+	 dst-table="sch00_monolith.tb_partner" reference-fk="fk_tb_trip__partner_id"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="1973.88" y="374.161"/>
+	</line>
+</relationship>
+
+<relationship name="rel_tb_trip_tb_vessel" type="relfk" layer="0"
+	 custom-color="#000000"
+	 src-table="sch00_monolith.tb_trip"
+	 dst-table="sch00_monolith.tb_vessel" reference-fk="fk_tb_trip__vessel_id"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="1637.47" y="211.787"/>
+	</line>
+</relationship>
+
+<relationship name="rel_tb_trip_monicet_person_tb_trip" type="relfk" layer="0"
+	 custom-color="#000000"
+	 src-table="sch00_monolith.tb_trip_monicet_person"
+	 dst-table="sch00_monolith.tb_trip" reference-fk="fk_tb_trip_monicet_person__trip_id"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="1010.88" y="213.621"/>
+	</line>
+</relationship>
+
+<relationship name="rel_tb_trip_monicet_person_tb_person" type="relfk" layer="0"
+	 custom-color="#cb057b"
+	 src-table="sch00_monolith.tb_trip_monicet_person"
+	 dst-table="sch00_monolith.tb_person" reference-fk="fk_tb_trip_monicet_person__person_id"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="822.754" y="398.861"/>
+	</line>
+</relationship>
+
+<relationship name="rel_tb_trip_event_position_tb_trip" type="relfk" layer="0"
+	 custom-color="#1ae0cb"
+	 src-table="sch00_monolith.tb_trip_event_position"
+	 dst-table="sch00_monolith.tb_trip" reference-fk="fk_tb_trip_event_position__trip_id"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="1468.03" y="374.161"/>
+	</line>
+</relationship>
+
+<relationship name="rel_tb_sighting_tb_atmospheric_info" type="relfk" layer="0"
+	 custom-color="#d36907"
+	 src-table="sch00_monolith.tb_sighting"
+	 dst-table="sch00_monolith.tb_atmospheric_info" reference-fk="fk_tb_sighting__atmospheric_info_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_sighting_tb_trip_event_position" type="relfk" layer="0"
+	 custom-color="#736d58"
+	 src-table="sch00_monolith.tb_sighting"
+	 dst-table="sch00_monolith.tb_trip_event_position" reference-fk="fk_tb_sighting__trip_event_position_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_sighting__species_tb_sighting" type="relfk" layer="0"
+	 custom-color="#ae28b0"
+	 src-table="sch00_monolith.rel_tb_sighting__species"
+	 dst-table="sch00_monolith.tb_sighting" reference-fk="fk_rel_tb_sighting__species__tb_sighting_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_sighting__species_tb_specie_catalog" type="relfk" layer="0"
+	 custom-color="#df8b1d"
+	 src-table="sch00_monolith.rel_tb_sighting__species"
+	 dst-table="sch00_monolith.tb_specie" reference-fk="fk_rel_tb_sighting__species__species_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_sighting__identifieds_cetaceos_tb_sighting" type="relfk" layer="0"
+	 custom-color="#9d4f58"
+	 src-table="sch00_monolith.rel_tb_sighting__identifieds_cetaceos"
+	 dst-table="sch00_monolith.tb_sighting" reference-fk="fk_rel_tb_sighting__identifieds_cetaceos__tb_sighting_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_sighting__identifieds_cetaceos_tb_identified_cetaceo" type="relfk" layer="0"
+	 custom-color="#8efc17"
+	 src-table="sch00_monolith.rel_tb_sighting__identifieds_cetaceos"
+	 dst-table="sch00_monolith.tb_identified_cetaceo" reference-fk="fk_rel_tb_sighting__identifieds__identifieds_cetaceos_8f_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_assets_album_sighting_tb_sighting" type="relfk" layer="0"
+	 custom-color="#5d3380"
+	 src-table="sch00_monolith.tb_assets_album_sighting"
+	 dst-table="sch00_monolith.tb_sighting" reference-fk="fk_tb_assets_album_sighting__sighting_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_raw_asset_proc_tmp_tb_type_asset" type="relfk" layer="0"
+	 custom-color="#0af3fd"
+	 src-table="sch00_monolith.tb_raw_asset_proc_tmp"
+	 dst-table="sch00_monolith.tb_type_asset" reference-fk="fk_tb_raw_asset_proc_tmp__asset_type_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_asset_tb_type_asset" type="relfk" layer="0"
+	 custom-color="#d03337"
+	 src-table="sch00_monolith.tb_asset"
+	 dst-table="sch00_monolith.tb_type_asset" reference-fk="fk_tb_asset__asset_type_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_asset_tb_raw_asset_proc_tmp" type="relfk" layer="0"
+	 custom-color="#5aef72"
+	 src-table="sch00_monolith.tb_asset"
+	 dst-table="sch00_monolith.tb_raw_asset_proc_tmp" reference-fk="fk_tb_asset__raw_asset_proc_tmp_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_asset__assets_albums_species_tb_asset" type="relfk" layer="0"
+	 custom-color="#445241"
+	 src-table="sch00_monolith.rel_tb_asset__assets_albums_species"
+	 dst-table="sch00_monolith.tb_asset" reference-fk="fk_rel_tb_asset__assets_albums_species__tb_asset_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_asset__assets_albums_species_tb_assets_album_specie" type="relfk" layer="0"
+	 custom-color="#ed3624"
+	 src-table="sch00_monolith.rel_tb_asset__assets_albums_species"
+	 dst-table="sch00_monolith.tb_assets_album_specie" reference-fk="fk_rel_tb_asset__assets_albums___assets_albums_species_28_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_asset__assets_albums_sightings_tb_asset" type="relfk" layer="0"
+	 custom-color="#fd7bc6"
+	 src-table="sch00_monolith.rel_tb_asset__assets_albums_sightings"
+	 dst-table="sch00_monolith.tb_asset" reference-fk="fk_rel_tb_asset__assets_albums_sightings__tb_asset_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rel_tb_asset__assets_albums_sightings_tb_assets_album_sight" type="relfk" layer="0"
+	 custom-color="#89cdf8"
+	 src-table="sch00_monolith.rel_tb_asset__assets_albums_sightings"
+	 dst-table="sch00_monolith.tb_assets_album_sighting" reference-fk="fk_rel_tb_asset__assets_albums___assets_albums_sightings_05_id"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_asset_metadata_tb_asset" type="relfk" layer="0"
+	 custom-color="#aebe31"
+	 src-table="sch00_monolith.tb_asset_metadata"
+	 dst-table="sch00_monolith.tb_asset" reference-fk="fk_tb_asset_metadata__asset_id"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

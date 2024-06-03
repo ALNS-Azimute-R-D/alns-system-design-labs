@@ -1,0 +1,63 @@
+/** *************************************
+/* Microservice: 02 - Partner
+/* --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOrganization
+ * - Organization
+ * - BusinessUnit 
+*/
+
+
+entity TypeOrganization(tb_type_organization) {
+    name String required maxlength(120)
+    description TextBlob required
+    businessHandlerClazz String maxlength(512)    
+}
+
+
+entity Organization(tb_organization) {
+    acronym String required maxlength(20)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    pointLocation AnyBlob
+    mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    faxNumber String maxlength(15)
+    extraDetails TextBlob    
+    status OrganizationStatusEnum required
+    active Boolean required
+}
+
+
+
+entity BusinessUnit(tb_business_unit) {
+    acronym String required maxlength(20)
+    name String required minlength(2) maxlength(100)
+}
+
+
+
+
+
+enum OrganizationStatusEnum {
+    UNDER_EVALUATION, ONBOARDING, READY_TO_START, WORKING, PENDENT, IN_FAILURE
+}
+
+
+
+relationship ManyToOne {
+    Organization{typeOrganization(name) required} to TypeOrganization{organizationsList},
+    BusinessUnit{organization(name) required} to Organization{businessesUnitsList},
+
+    Organization{organizationParent(name)} to Organization{childrenOrganizationsList}    
+}
+
+

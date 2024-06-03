@@ -1,0 +1,41 @@
+/*
+ * Create the Monolith App
+ */
+
+
+application {
+  config {
+    applicationType monolith
+    baseName NexusgeoFakeFullstack03QuarkusAngular
+    packageName ge.nexus.ciam.miscelaneous.clientapps.fakeuiapps.quarkusangular
+    serverPort 9086
+    buildTool maven
+    authenticationType oauth2
+    serviceDiscoveryType no
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache true
+    cacheProvider ehcache
+    // messageBroker kafka
+    clientFramework angularX
+    clientTheme united
+    clientThemeVariant dark
+    enableTranslation true
+    nativeLanguage en
+    languages [pt-br, en, de, es, fr, ru]
+    testFrameworks [cucumber, gatling]
+    skipClient false
+    skipServer false 
+    skipUserManagement false
+  }
+  entities *
+}
+
+
+
+deployment {
+  deploymentType docker-compose
+  dockerRepositoryName "scout23df"
+  monitoring yes
+}

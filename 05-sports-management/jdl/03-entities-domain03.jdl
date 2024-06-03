@@ -1,0 +1,55 @@
+/** *************************************
+/* Microservice: 03 - PersonMgmnt
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - PersonType 
+ * - Person
+*/
+
+
+entity PersonType(tb_type_person) {
+    code String required maxlength(5)
+    description String required maxlength(40)
+}
+
+entity Person(tb_person) {
+    firstName String required maxlength(50)
+    lastName String required maxlength(80)
+    birthday LocalDate required
+    gender GenderEnum required
+    codeBI String maxlength(20)
+    codeNIF String maxlength(20)
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    pointLocation AnyBlob
+    mainEmail String unique required maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    occupation String maxlength(40)
+    preferredLanguage String maxlength(5)
+    usernameInOAuth2 String maxlength(40)
+    userIdInOAuth2 String maxlength(80)
+    extraDetails TextBlob
+    avatarImg ImageBlob
+}
+
+
+enum GenderEnum {
+    MALE, FEMALE, OTHER
+}
+
+
+relationship ManyToOne {
+    Person{personType(code) required} to PersonType{persons},
+    Person{partner(name) required} to Partner{persons} 
+
+    Person{townCity(name)} to TownCity{persons}       
+}
+
+
+

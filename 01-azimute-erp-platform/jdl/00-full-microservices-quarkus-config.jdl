@@ -1,0 +1,1230 @@
+/** *************************************
+/* Gateway :: With MicroFrontends
+/* ************************************* */
+
+
+application {
+  config {
+    applicationType gateway
+    baseName azimuteGateway01
+    packageName de.org.dexterity.azimute.gateway01
+    serverPort 8080
+    buildTool maven
+    authenticationType oauth2
+    serviceDiscoveryType consul
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache true
+    cacheProvider ehcache
+    messageBroker kafka
+    clientFramework angular
+    clientTheme united
+    clientThemeVariant dark
+    enableTranslation true
+    nativeLanguage en
+    languages [pt-pt, pt-br, en, de, es, fr]
+    testFrameworks [cypress, gatling]
+    microfrontends [msrvc00GeoAddressing, msrvc01OrganizationalStructure, msrvc02PersonManagement, msrvc03Finance, msrvc04Inventory, msrvc05Artwork, msrvc06JourneyRouting, msrvc07EventPlanning, msrvc08ECommerce, msrvc09MediaHandling]
+  }
+}
+
+
+
+/** *************************************
+/* Microservice: 00 - msrvc00GeoAddressing
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.geoaddressing
+    baseName msrvc00GeoAddressing
+    serverPort 9090
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities Country, Province, TownCity, District, Locality
+}
+
+
+
+/** *************************************
+/* Microservice: 01 - msrvc01OrganizationalStructure
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.orgstructure
+    baseName msrvc01OrganizationalStructure
+    serverPort 9091
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities TypeOrganization, Organization, BusinessUnit 
+}
+
+
+
+/** *************************************
+/* Microservice: 02 - msrvc02PersonManagement
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.personmgmnt
+    baseName msrvc02PersonManagement
+    serverPort 9092
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities TypeOfPerson, Person
+}
+
+
+
+/** *************************************
+/* Microservice: 03 - msrvc03Finance
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.finance
+    baseName msrvc03Finance
+    serverPort 9093
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities Invoice, PaymentMethod, Payment
+}
+
+
+/** *************************************
+/* Microservice: 04 - msrvc04Inventory
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.inventory
+    baseName msrvc04Inventory
+    serverPort 9094
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities Warehouse, Supplier, Brand, Product, InventoryTransaction, StockLevel
+}
+
+
+
+/** *************************************
+/* Microservice: 05 - msrvc05Artwork
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.artwork
+    baseName msrvc05Artwork
+    serverPort 9095
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities TypeOfArtmedia, TypeOfArtist, ArtisticGenre, Artist, Artwork, ArtworkCast
+}
+
+
+
+/** *************************************
+/* Microservice: 06 - msrvc06JourneyRouting
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.journeyrouting
+    baseName msrvc06JourneyRouting
+    serverPort 9096
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType neo4j
+    devDatabaseType neo4j
+    prodDatabaseType neo4j
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities TypeJourney, TransportOperator, Journey, RouteLeg, LocationNode 
+}
+
+
+
+/** *************************************
+/* Microservice: 07 - msrvc07EventPlanning
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.eventplanning
+    baseName msrvc07EventPlanning
+    serverPort 9097
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType mysql
+    prodDatabaseType mysql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities TypeOfEvent, TypeOfVenue, TypeOfActivity, Venue, Activity, Event, Program, EventProgram, ScheduledActivity, EventAttendee, TicketPurchased
+}
+
+
+
+
+/** *************************************
+/* Microservice: 08 - msrvc08ECommerce
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.ecommerce
+    baseName msrvc08ECommerce
+    serverPort 9098
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities Category, Article, Order, OrderItem
+}
+
+
+
+
+
+/** *************************************
+/* Microservice: 09 - msrvc09MediaHandling
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    packageName de.org.dexterity.azimute.ms.mediahandling
+    baseName msrvc09MediaHandling
+    serverPort 9099
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType mongodb
+    devDatabaseType mongodb
+    prodDatabaseType mongodb
+    enableHibernateCache false
+    testFrameworks [cypress]
+  }
+  entities RawAssetProcTmp, AssetType, Asset, AssetMetadata
+}
+
+
+
+
+/** *************************************
+/* Microservice: 01 - msrvc01GeoAddressing
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Country 
+ * - Province
+ * - TownCity 
+ * - District
+ * - Locality
+*/
+
+
+entity Country(tb_country) {
+    acronym String required maxlength(3)
+    name String required maxlength(40)
+    continent ContinentEnum required
+    geoPolygonArea AnyBlob
+}
+
+
+entity Province(tb_province) {
+    acronym String required maxlength(3)
+    name String required maxlength(40)
+    geoPolygonArea AnyBlob
+}
+
+entity TownCity(tb_town_city) {
+    acronym String required maxlength(8)
+    name String required maxlength(40)
+    geoPolygonArea AnyBlob
+}
+
+entity District(tb_district) {
+    acronym String required maxlength(8)
+    name String required maxlength(40)
+    geoPolygonArea AnyBlob
+}
+
+entity Locality(tb_locality) {
+    acronym String required maxlength(8)
+    name String required maxlength(840)
+    description TextBlob
+    geoPolygonArea AnyBlob
+}
+
+enum ContinentEnum {
+    AFRICA, ASIA, EUROPE, OCEANIA, CENTRAL_AMERICA, NORTH_AMERICA, SOUTH_AMERICA
+}
+
+
+relationship ManyToOne {
+    Province{country(name) required} to Country{provinces},
+    TownCity{province(name) required} to Province{townCities},
+    District{townCity(name) required} to TownCity{districts},
+    Locality{country(name) required} to Country{localities}
+}
+
+
+
+
+/** *************************************
+/* Microservice: 02 - Partner
+/* --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOrganization
+ * - Organization
+ * - BusinessUnit 
+*/
+
+
+entity TypeOrganization(tb_type_organization) {
+    name String required maxlength(120)
+    description TextBlob required
+    businessHandlerClazz String maxlength(512)    
+}
+
+
+entity Organization(tb_organization) {
+    acronym String required maxlength(20)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    pointLocation AnyBlob
+    mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    faxNumber String maxlength(15)
+    extraDetails TextBlob    
+    status OrganizationStatusEnum required
+    active Boolean required
+}
+
+
+
+entity BusinessUnit(tb_business_unit) {
+    acronym String required maxlength(20)
+    name String required minlength(2) maxlength(100)
+}
+
+
+
+
+
+enum OrganizationStatusEnum {
+    UNDER_EVALUATION, ONBOARDING, READY_TO_START, WORKING, PENDENT, IN_FAILURE
+}
+
+
+
+relationship ManyToOne {
+    Organization{typeOrganization(name) required} to TypeOrganization{organizationsList},
+    BusinessUnit{organization(name) required} to Organization{businessesUnitsList},
+
+    Organization{organizationParent(name)} to Organization{childrenOrganizationsList}    
+}
+
+
+
+
+/** *************************************
+/* Microservice: 03 - PersonMgmnt
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOfPerson 
+ * - Person
+*/
+
+
+entity TypeOfPerson(tb_type_person) {
+    code String required maxlength(5)
+    description String required maxlength(40)
+}
+
+entity Person(tb_person) {
+    firstName String required maxlength(50)
+    lastName String required maxlength(80)
+    birthday LocalDate required
+    gender GenderEnum required
+    codeBI String maxlength(20)
+    codeNIF String maxlength(20)
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    pointLocation AnyBlob
+    mainEmail String unique required maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    occupation String maxlength(40)
+    preferredLanguage String maxlength(5)
+    usernameInOAuth2 String maxlength(40)
+    userIdInOAuth2 String maxlength(80)
+    organizationId Long
+    extraDetails TextBlob
+    avatarImg ImageBlob
+}
+
+
+enum GenderEnum {
+    MALE, FEMALE, OTHER
+}
+
+
+relationship ManyToOne {
+    Person{typeOfPerson(code) required} to TypeOfPerson{personsList},
+    Person{managerPerson(lastName)} to Person{managedPersonsList},
+}
+
+
+
+
+/** *************************************
+/* Microservice: 03 - msrvc03Finance
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Invoice 
+ * - PaymentMethod
+ * - Payment 
+*/
+
+
+entity Invoice(tb_invoice) {
+    businessCode String required maxlength(15)
+    originalOrderId Long
+    invoiceDate Instant
+    dueDate Instant
+    description String required maxlength(80)
+    taxValue BigDecimal
+    shippingValue BigDecimal
+    amountDueValue BigDecimal
+    numberOfInstallmentsOriginal Integer required
+    numberOfInstallmentsPaid Integer    
+    amountPaidValue BigDecimal  
+    status InvoiceStatusEnum required
+    extraDetails TextBlob
+}
+
+
+
+entity PaymentMethod(tb_payment_method) {
+    code String required maxlength(10)
+    description String required maxlength(40)
+    businessHandlerClazz String maxlength(512)    
+}
+
+
+
+entity Payment(tb_payment) {
+    installmentNumber Integer required
+    paymentDueDate Instant required
+    paymentPaidDate Instant required
+    paymentAmount BigDecimal required
+    typeOfPayment PaymentTypeEnum required    
+    status PaymentStatusEnum required
+    extraDetails TextBlob
+}
+
+
+
+
+enum InvoiceStatusEnum {
+    PAID_ONCE, PAYING_IN_INSTALLMENTS, ISSUED, CANCELLED
+}
+
+enum PaymentTypeEnum {
+    CREDIT, DEBIT, OTHER
+}
+
+enum PaymentStatusEnum {
+    OPEN, DELAYED, PAID, CANCELLED
+}
+
+
+
+
+
+relationship ManyToOne {
+    Invoice{preferrablePaymentMethod(code)} to PaymentMethod{invoicesAsPreferrableList},
+    Payment{paymentMethod(code) required} to PaymentMethod{paymentsList}    
+}
+
+
+
+
+
+/** *************************************
+/* Microservice: 04 - msrvc04Inventory
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Warehouse 
+ * - Supplier 
+ * - Brand
+ * - Product
+ * - InventoryTransaction
+ * - StockLevel
+*/
+
+
+
+entity Warehouse(tb_warehouse) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    pointLocation AnyBlob
+    mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    faxNumber String maxlength(15)
+    extraDetails TextBlob    
+}
+
+
+
+entity Supplier(tb_supplier) {
+    acronym String required maxlength(50)
+    companyName String required minlength(2) maxlength(120)
+    representativeLastName String maxlength(50),
+    representativeFirstName String maxlength(50),
+    jobTitle String maxlength(50),
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    city String maxlength(50),
+    stateProvince String maxlength(50),
+    zipPostalCode String maxlength(15),
+    countryRegion String maxlength(50),
+    webPage TextBlob,
+    pointLocation AnyBlob
+    mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    faxNumber String maxlength(15)
+    extraDetails TextBlob    
+}
+
+
+
+entity Brand(tb_brand) {
+    acronym String required maxlength(20)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+}
+
+
+
+entity Product(tb_product) {
+    productSKU String maxlength(25),
+    productName String maxlength(50),
+    description TextBlob,
+    standardCost BigDecimal,
+    listPrice BigDecimal required,
+    reorderLevel Integer,
+    targetLevel Integer,
+    quantityPerUnit String maxlength(50),
+    discontinued Boolean required,
+    minimumReorderQuantity Integer,
+    suggestedCategory String maxlength(50),
+    attachments Blob,
+    supplierIds TextBlob    
+}
+
+
+
+entity InventoryTransaction(tb_inventory_transaction) {
+    invoiceId Long required, 
+    transactionCreatedDate Instant,
+    transactionModifiedDate Instant,
+    quantity Integer required,
+    comments String maxlength(255)
+}
+
+
+
+entity StockLevel(tb_stock_level) {
+    lastModifiedDate Instant required,
+    ramainingQuantity Integer required,
+    extraDetails TextBlob
+}
+
+
+
+
+
+
+relationship ManyToOne {
+    Product{brand(acronym) required} to Brand{productsList},
+    InventoryTransaction{supplier(acronym) required} to Supplier{inventoryTransactionsList},
+    InventoryTransaction{product(productName) required} to Product{inventoryTransactionsList},
+    InventoryTransaction{warehouse(acronym) required} to Warehouse{inventoryTransactionsList},
+    StockLevel{warehouse(acronym) required} to Warehouse{stockLevelsList},
+    StockLevel{product(productName) required} to Product{stockLevelsList}
+}
+
+
+relationship ManyToMany {
+    Supplier{productsList} to Product{suppliersList}
+}
+
+
+
+
+
+/** *************************************
+/* Microservice: 05 - msrvc05Artwork
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOfArtmedia 
+ * - TypeOfArtist 
+ * - ArtisticGenre
+ * - Artist
+ * - Artwork
+ * - ArtworkCast
+*/
+
+
+
+
+entity TypeOfArtmedia(tb_artmedia_type) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+}
+
+
+
+entity TypeOfArtist(tb_artmedia_type) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+}
+
+
+
+entity ArtisticGenre(tb_artistic_genre) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+}
+
+
+
+entity Artist(tb_artist) {
+    acronym String required maxlength(50)
+    publicName String required minlength(2) maxlength(120)
+    realName String minlength(2) maxlength(120)
+    biographyDetails TextBlob
+}
+
+
+
+entity Artwork(tb_artwork) {
+    artworkTitle String required minlength(2) maxlength(255)
+    productionYear Integer
+    seasonNumber Integer
+    episodeOrSequenceNumber Integer
+    registerIdInIMDB String maxlength(50)
+    assetsCollectionUUID String maxlength(255)
+    contentDetails TextBlob
+}
+
+
+
+entity ArtworkCast(tb_artwork_cast) {
+    orderOfAppearance Integer
+    characterName String minlength(2) maxlength(255)
+    mainAssetUUID String maxlength(255)
+    characterDetails TextBlob
+}
+
+
+
+
+
+relationship ManyToOne {
+    Artist{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artistsList},
+    Artist{typeOfArtist(acronym) required} to TypeOfArtist{artistsList},
+    Artwork{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artworksList},    
+    ArtworkCast{artwork(artworkTitle) required} to Artwork{artworkCastsList},
+    ArtworkCast{artist(publicName) required} to Artist{artworkCastsList},
+    Artist{artistAggregator(acronym)} to Artist{linkedArtistsList},
+    Artwork{artworkAggregator(artworkTitle)} to Artwork{linkedArtworksList}
+}
+
+
+relationship ManyToMany {
+    Artist{artisticsGenresList} to ArtisticGenre{artistsList}
+}
+
+
+
+
+/** *************************************
+/* Microservice: 06 - msrvc06JourneyRouting
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeJourney 
+ * - TransportOperator
+ * - Journey
+ * - RouteLeg
+ * - LocationNode 
+*/
+
+
+entity TypeJourney(tb_type_journey) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+
+
+entity TransportOperator(tb_transport_operator) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    organizationId Long
+}
+
+
+entity Journey(tb_journey) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    userUUID String maxlength(255)
+    status JourneyStatusEnum required
+    extraDetails TextBlob
+}
+
+
+entity RouteLeg(tb_route_leg) {
+    name String required maxlength(255)
+    sequenceNumber Integer
+    meansOfTransportation MeansOfTransportationEnum required
+    distanceInKm Double
+    estimatedDepartureTime Instant
+    estimatedArrivalTime Instant    
+    isDelayed Boolean
+    realDepartureTime Instant
+    realArrivalTime Instant    
+    dueCostValue BigDecimal
+}
+
+
+entity LocationNode(tb_location) {
+    name String required maxlength(255)
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    zipPostalCode String maxlength(15),
+    townCity Long,
+    stateProvince Long,
+    countryRegion String maxlength(50),
+    geoPointLocation AnyBlob,
+    extraDetails TextBlob
+}
+
+
+
+
+
+enum JourneyStatusEnum {
+    ENABLED, DISABLED, DELETED
+}
+
+enum MeansOfTransportationEnum {
+    BY_WALKING, BY_BIKE, BY_CAR, BY_BUS, BY_SUBWAY, BY_METRO_TRAIN, BY_REGIONAL_TRAIN, BY_HIGH_VELOCITY_TRAIN, BY_AIRPLANE_FLIGHT, BY_SHIP_RIVER, BY_SHIP_SEA, BY_OTHERS
+}
+
+
+
+
+
+relationship ManyToOne {
+    Journey{typeJourney(acronym)} to TypeJourney{journeysList},
+
+    RouteLeg{transportOperator(acronym)} to TransportOperator{routesLegsList},
+
+    RouteLeg{journeyFrom(acronym) required} to Journey{fromRoutesLegsList},
+    RouteLeg{journeyTo(acronym) required} to Journey{toRoutesLegsList},
+
+    LocationNode{routeLegFrom(name) required} to RouteLeg{fromLocationsNodesList},
+    LocationNode{routeLegTo(name) required} to RouteLeg{toLocationsNodesList}
+}
+
+
+
+
+/** *************************************
+/* Microservice: 07 - msrvc07EventPlanning
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOfEvent 
+ * - TypeOfVenue
+ * - TypeOfActivity
+ * - Venue
+ * - Activity
+ * - Event
+ * - Program
+ * - EventProgram
+ * - ScheduledActivity
+ * - EventAttendee
+ * - TicketPurchased
+*/
+
+
+entity TypeOfEvent(tb_type_event) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+
+
+entity TypeOfVenue(tb_type_venue) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+
+
+entity TypeOfActivity(tb_type_activity) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+
+
+entity Venue(tb_venue) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    localityId Long
+    geoPointLocation AnyBlob
+}
+
+
+
+entity Activity(tb_activity) {
+    name String required maxlength(120)
+    shortDescription String maxlength(255)
+    fullDescription TextBlob
+    mainGoals String maxlength(255)
+    estimatedDurationTime Duration
+    lastPerformedDate LocalDate
+    createdByUserId String
+    createdWhen Instant
+    assetsCollectionUUID String maxlength(255)
+}
+
+
+
+entity Event(tb_event) {
+    acronym String maxlength(50)
+    name String required maxlength(150)
+    description String required maxlength(255)
+    fullDescription TextBlob
+    startTime Instant required
+    endTime Instant
+    promoteurPersonId Long
+    assetsCollectionUUID String maxlength(255)
+    defaultTicketValue BigDecimal required
+    status EventStatusEnum required
+}
+
+
+
+entity Program(tb_program) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    fullDescription TextBlob
+    targetPublic String
+    isActive Boolean required
+}
+
+
+
+entity EventProgram(tb_event_program) {
+    responsiblePersonId Long
+    percentageExecution Double
+}
+
+
+entity ScheduledActivity(tb_scheduled_activity) {
+    customizedName String maxlength(150)
+    startTime Instant required
+    endTime Instant
+    numberOfAttendees Integer
+    status ActivityStatusEnum
+    averageEvaluationInStars Integer 
+    extraDetails TextBlob
+    assetsCollectionUUID String maxlength(255)
+}
+
+
+
+entity EventAttendee(tb_event_attendee) {
+    attendeeUserId Long required
+    attendedAsRole String required maxlength(30)
+    wasPresentInEvent Boolean
+    shouldBuyTicket Boolean
+    ticketNumber String maxlength(20)
+    seatNumber String maxlength(10)
+}
+
+
+
+entity TicketPurchased(tb_ticket_purchased) {
+    buyingCode String maxlength(30)
+    duePaymentDate Instant
+    amountOfTickets Integer
+    taxValue BigDecimal
+    ticketValue BigDecimal
+    acquiredSeatsNumbers String maxlength(50)
+    description String maxlength(255)
+    invoiceId Long
+}
+
+
+
+
+enum EventStatusEnum {
+    IN_PREVIEM, DRAFT, CONFIRMED, OPEN, RUNNING, PERFORMED, CANCELLED, DELETED, OTHER
+}
+
+enum ActivityStatusEnum {
+    DRAFT, IN_TEST, IN_EXPERIMENTAL, WAITING, PERFORMED, CANCELLED, DELETED, OTHER
+}
+
+
+
+
+
+relationship ManyToOne {
+    Event{typeOfEvent(acronym) required} to TypeOfEvent{eventsList},
+    Venue{typeOfVenue(acronym) required} to TypeOfVenue{venuesList},
+    Activity{typeOfActivity(acronym) required} to TypeOfActivity{activitiesList},
+
+    Event{mainVenue(acronym)} to Venue{eventsList},
+
+    EventProgram{event(acronym)} to Event{eventProgramsList},
+    EventProgram{program(acronym)} to Program{eventProgramsList},    
+
+    ScheduledActivity{program(acronym)} to Program{scheduledActivitiesList},
+    ScheduledActivity{activity(name)} to Activity{scheduledActivitiesList},    
+
+    TicketPurchased{event(acronym)} to Event{ticketsPurchasedList},
+
+    EventAttendee{event(acronym)} to Event{eventAttendeesList},
+    EventAttendee{ticketPurchased(buyingCode)} to TicketPurchased{eventAttendeesList}
+
+}
+
+
+
+
+/** *************************************
+/* Microservice: 08 - msrvc08ECommerce
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Category 
+ * - Article
+ * - Order
+ * - OrderItem
+*/
+
+
+entity Category(tb_category) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+
+
+entity Article(tb_article) {
+    inventoryProductId Long required,
+    customName String maxlength(150),
+    customDescription TextBlob,
+    priceValue BigDecimal,
+    itemSize SizeOptionEnum required
+    assetsCollectionUUID String maxlength(255),
+    isEnabled Boolean
+}
+
+
+
+entity Order {
+    businessCode String required maxlength(20),
+    customerUserId String required,
+    placedDate Instant required,
+    totalTaxValue BigDecimal,
+    totalDueValue BigDecimal,
+    status OrderStatusEnum required,
+    invoiceId Long,
+    estimatedDeliveryDate Instant
+}
+
+
+
+entity OrderItem {
+    quantity Integer required min(0)
+    totalPrice BigDecimal required min(0)
+    status OrderItemStatusEnum required
+}
+
+
+
+enum SizeOptionEnum {
+    S, M, L, XL, XXL, XXXL
+}
+
+enum OrderStatusEnum {
+    COMPLETED, PENDING, CANCELLED
+}
+
+enum OrderItemStatusEnum {
+    AVAILABLE, OUT_OF_STOCK, BACK_ORDER
+}
+
+
+
+
+relationship ManyToOne {
+  OrderItem{article(customName) required} to Article{ordersItemsList}
+  Category{categoryParent(acronym)} to Category{childrenCategoriesList}
+}
+
+relationship OneToMany {
+   Order{ordersItemsList} to OrderItem{order(businessCode) required} ,
+   Category{articlesList} to Article{mainCategory(acronym)}
+}
+
+
+
+
+
+
+
+/** *************************************
+/* Microservice: 09 - msrvc09MediaHandling
+*  --> 
+/* ************************************* */
+
+
+
+/**
+ * - RawAssetProcTmp 
+ * - AssetType
+ * - Asset
+ * - AssetMetadata
+*/
+
+entity AssetType(tb_type_asset) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+    extraDetails TextBlob
+}
+
+entity RawAssetProcTmp(tb_raw_asset_proc_tmp) {
+    name String required maxlength(255)
+    statusRawProcessing StatusRawProcessingEnum
+    fullFilenamePath String maxlength(512)
+    assetRawContentAsBlob Blob
+    extraDetails TextBlob
+}
+
+entity Asset(tb_asset) {
+    uid UUID
+    name String required maxlength(255)
+    storageTypeUsed StorageTypeEnum
+    fullFilenamePath String maxlength(512)
+    status StatusAssetEnum
+    preferredPurpose PreferredPurposeEnum
+    assetContentAsBlob Blob
+}
+
+entity AssetMetadata(tb_asset_metadata) {
+    metadataDetails TextBlob
+}
+
+
+
+enum StatusRawProcessingEnum {
+    UPLOADING, UPLOADED, WAITING_FOR_PROCESSING, PROCESSING, DONE, FAILURE
+}
+
+enum StorageTypeEnum {
+    BLOB_IN_DB, LOCAL_FILESYSTEM, LOCAL_MINIO, REMOTE_FILESYSTEM, REMOTE_MINIO, AWS_S3, OTHER_CLOUD_STORAGE
+}
+
+enum StatusAssetEnum {
+    ENABLED, DISABLED, DELETED
+}
+
+enum PreferredPurposeEnum {
+    USER_AVATAR, MONICET_ALBUM, OTHER
+}
+
+
+
+
+
+relationship ManyToOne {
+    RawAssetProcTmp{assetType(name) required} to AssetType{rawAssetsProcsTmpsList},
+    Asset{assetType(name) required} to AssetType{assetsList},
+    Asset{rawAssetProcTmp(name)} to RawAssetProcTmp{assetsList},
+    AssetMetadata{asset(name) required} to Asset{assetMetadatasList}
+}
+
+
+
+
+deployment {
+  deploymentType docker-compose
+  serviceDiscoveryType consul
+  appsFolders [azimuteGateway01, msrvc00GeoAddressing, msrvc01OrganizationalStructure, msrvc02PersonManagement, msrvc03Finance, msrvc04Inventory, msrvc05Artwork, msrvc06JourneyRouting, msrvc07EventPlanning, msrvc08ECommerce, msrvc09MediaHandling]
+  dockerRepositoryName "scout23df"
+}
+
+
+deployment {
+  deploymentType kubernetes
+  monitoring yes
+  appsFolders [azimuteGateway01, msrvc00GeoAddressing, msrvc01OrganizationalStructure, msrvc02PersonManagement, msrvc03Finance, msrvc04Inventory, msrvc05Artwork, msrvc06JourneyRouting, msrvc07EventPlanning, msrvc08ECommerce, msrvc09MediaHandling]
+
+  clusteredDbApps [azimuteGateway01, msrvc00GeoAddressing, msrvc01OrganizationalStructure, msrvc02PersonManagement, msrvc03Finance, msrvc04Inventory, msrvc05Artwork, msrvc06JourneyRouting, msrvc07EventPlanning, msrvc08ECommerce, msrvc09MediaHandling]
+  
+  kubernetesNamespace azimute-platform
+  kubernetesUseDynamicStorage true
+  kubernetesStorageClassName ""
+  serviceDiscoveryType consul
+  dockerRepositoryName "scout23df"
+}

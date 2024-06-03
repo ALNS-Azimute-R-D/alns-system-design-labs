@@ -1,0 +1,328 @@
+/** *************************************
+/* Gateway :: With MicroFrontends
+/* ************************************* */
+
+
+application {
+  config {
+    applicationType gateway
+    reactive true
+    baseName azimuteGateway01
+    packageName de.org.dexterity.azimute.gateway01
+    serverPort 8080
+    buildTool maven
+    authenticationType oauth2
+    serviceDiscoveryType consul
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache true
+    cacheProvider ehcache
+    messageBroker kafka
+    clientFramework angular
+    clientTheme united
+    clientThemeVariant dark
+    enableTranslation true
+    nativeLanguage en
+    languages [pt-pt, pt-br, en, de, es, fr]
+    testFrameworks [cypress, gatling]
+    microfrontends [msrvc00GeoAddressing, msrvc01OrganizationalStructure, msrvc02PersonManagement, msrvc03Finance, msrvc04Inventory, msrvc05Artwork, msrvc06JourneyRouting, msrvc07EventPlanning, msrvc08ECommerce, msrvc09MediaHandling]
+  }
+}
+
+
+
+/** *************************************
+/* Microservice: 00 - msrvc00GeoAddressing
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.geoaddressing
+    baseName msrvc00GeoAddressing
+    serverPort 9090
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities Country, Province, TownCity, District, Locality
+}
+
+
+
+/** *************************************
+/* Microservice: 01 - msrvc01OrganizationalStructure
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.orgstructure
+    baseName msrvc01OrganizationalStructure
+    serverPort 9091
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities TypeOrganization, Organization, BusinessUnit 
+}
+
+
+
+/** *************************************
+/* Microservice: 02 - msrvc02PersonManagement
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.personmgmnt
+    baseName msrvc02PersonManagement
+    serverPort 9092
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities TypeOfPerson, Person
+}
+
+
+
+/** *************************************
+/* Microservice: 03 - msrvc03Finance
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.finance
+    baseName msrvc03Finance
+    serverPort 9093
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities Invoice, PaymentMethod, Payment
+}
+
+
+/** *************************************
+/* Microservice: 04 - msrvc04Inventory
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.inventory
+    baseName msrvc04Inventory
+    serverPort 9094
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities Warehouse, Supplier, Brand, Product, InventoryTransaction, StockLevel
+}
+
+
+
+/** *************************************
+/* Microservice: 05 - msrvc05Artwork
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.artwork
+    baseName msrvc05Artwork
+    serverPort 9095
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities TypeOfArtmedia, TypeOfArtist, ArtisticGenre, Artist, Artwork, ArtworkCast
+}
+
+
+
+/** *************************************
+/* Microservice: 06 - msrvc06JourneyRouting
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.journeyrouting
+    baseName msrvc06JourneyRouting
+    serverPort 9096
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType neo4j
+    devDatabaseType neo4j
+    prodDatabaseType neo4j
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities TypeJourney, TransportOperator, Journey, RouteLeg, LocationNode 
+}
+
+
+
+/** *************************************
+/* Microservice: 07 - msrvc07EventPlanning
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.eventplanning
+    baseName msrvc07EventPlanning
+    serverPort 9097
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType mysql
+    prodDatabaseType mysql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities TypeOfEvent, TypeOfVenue, TypeOfActivity, Venue, Activity, Event, Program, EventProgram, ScheduledActivity, EventAttendee, TicketPurchased
+}
+
+
+
+
+/** *************************************
+/* Microservice: 08 - msrvc08ECommerce
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.ecommerce
+    baseName msrvc08ECommerce
+    serverPort 9098
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities Category, Article, Order, OrderItem
+}
+
+
+
+
+
+/** *************************************
+/* Microservice: 09 - msrvc09MediaHandling
+*  --> 
+/* ************************************* */
+
+application {
+  config {
+    applicationType microservice
+    reactive true
+    packageName de.org.dexterity.azimute.ms.mediahandling
+    baseName msrvc09MediaHandling
+    serverPort 9099
+    buildTool maven
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    clientFramework angular
+    databaseType mongodb
+    devDatabaseType mongodb
+    prodDatabaseType mongodb
+    enableHibernateCache false
+    searchEngine elasticsearch
+    testFrameworks [cypress]
+  }
+  entities RawAssetProcTmp, AssetType, Asset, AssetMetadata
+}
+
+
+
+
+deployment {
+  deploymentType kubernetes
+  monitoring yes
+  appsFolders [azimuteGateway01, msrvc00GeoAddressing, msrvc01OrganizationalStructure, msrvc02PersonManagement, msrvc03Finance, msrvc04Inventory, msrvc05Artwork, msrvc06JourneyRouting, msrvc07EventPlanning, msrvc08ECommerce, msrvc09MediaHandling]
+  clusteredDbApps [msrvc08ECommerce]
+  kubernetesNamespace azimute-platform
+  kubernetesUseDynamicStorage true
+  kubernetesStorageClassName ""
+  serviceDiscoveryType consul
+  dockerRepositoryName "scout23df"
+}

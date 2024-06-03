@@ -1,0 +1,87 @@
+/** *************************************
+/* Microservice: 05 - msrvc05Artwork
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOfArtmedia 
+ * - TypeOfArtist 
+ * - ArtisticGenre
+ * - Artist
+ * - Artwork
+ * - ArtworkCast
+*/
+
+
+
+
+entity TypeOfArtmedia(tb_artmedia_type) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+    description TextBlob
+}
+
+
+
+entity TypeOfArtist(tb_artmedia_type) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+}
+
+
+
+entity ArtisticGenre(tb_artistic_genre) {
+    acronym String required maxlength(50)
+    name String required minlength(2) maxlength(120)
+}
+
+
+
+entity Artist(tb_artist) {
+    acronym String required maxlength(50)
+    publicName String required minlength(2) maxlength(120)
+    realName String minlength(2) maxlength(120)
+    biographyDetails TextBlob
+}
+
+
+
+entity Artwork(tb_artwork) {
+    artworkTitle String required minlength(2) maxlength(255)
+    productionYear Integer
+    seasonNumber Integer
+    episodeOrSequenceNumber Integer
+    registerIdInIMDB String maxlength(50)
+    assetsCollectionUUID String maxlength(255)
+    contentDetails TextBlob
+}
+
+
+
+entity ArtworkCast(tb_artwork_cast) {
+    orderOfAppearance Integer
+    characterName String minlength(2) maxlength(255)
+    mainAssetUUID String maxlength(255)
+    characterDetails TextBlob
+}
+
+
+
+
+
+relationship ManyToOne {
+    Artist{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artistsList},
+    Artist{typeOfArtist(acronym) required} to TypeOfArtist{artistsList},
+    Artwork{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artworksList},    
+    ArtworkCast{artwork(artworkTitle) required} to Artwork{artworkCastsList},
+    ArtworkCast{artist(publicName) required} to Artist{artworkCastsList},
+    Artist{artistAggregator(acronym)} to Artist{linkedArtistsList},
+    Artwork{artworkAggregator(artworkTitle)} to Artwork{linkedArtworksList}
+}
+
+
+relationship ManyToMany {
+    Artist{artisticsGenresList} to ArtisticGenre(artistsList}
+}
+

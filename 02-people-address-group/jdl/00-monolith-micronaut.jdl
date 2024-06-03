@@ -1,0 +1,41 @@
+/*
+ * Create the Monolith App
+ */
+
+
+application {
+  config {
+    applicationType monolith
+    baseName NexusgeoFakeFullstack06MicronautAngular
+    packageName ge.nexus.ciam.miscelaneous.clientapps.fakeuiapps.micronautangular
+    serverPort 9088
+    buildTool maven
+    authenticationType oauth2
+    serviceDiscoveryType no
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache true
+    cacheProvider ehcache
+    // messageBroker kafka
+    clientFramework angularX
+    clientTheme united
+    clientThemeVariant dark
+    enableTranslation true
+    nativeLanguage en
+    languages [pt-br, en, de, es, fr, ru]
+    testFrameworks [gatling]
+    skipClient false
+    skipServer false
+    skipUserManagement false
+  }
+  entities *
+}
+
+
+
+deployment {
+  deploymentType docker-compose
+  dockerRepositoryName "scout23df"
+  monitoring no
+}
