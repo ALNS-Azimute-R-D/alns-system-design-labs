@@ -1,0 +1,105 @@
+/** *************************************
+/* Microservice: 08 - msrvc08ECommerce
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - Category 
+ * - Article
+ * - Order
+ * - OrderItem
+*/
+
+
+entity Customer(tb_customer) {
+    customerBusinessCode String required maxlength(15)
+    name String required minlength(2) maxlength(80)
+    description TextBlob
+    email String unique required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    addressDetails String maxlength(255)
+    zipCode String maxlength(8)
+    keycloakGroupDetails String maxlength(1024)
+    status CustomerStatusEnum required
+    active Boolean required
+}
+
+entity CustomerType(tb_type_customer) {
+    name String required maxlength(20)
+    description String maxlength(255)
+    businessHandlerClazz String maxlength(255)
+}
+
+
+
+entity Category(tb_category) {
+    acronym String maxlength(30)
+    name String required maxlength(100)
+    description String maxlength(255)
+    handlerClazzName String maxlength(255)
+}
+
+entity Article(tb_article) {
+    inventoryProductId Long required
+    customName String maxlength(150)
+    customDescription TextBlob
+    priceValue BigDecimal
+    itemSize SizeOptionEnum required
+    assetsCollectionUUID String maxlength(255)
+    isEnabled Boolean
+}
+
+entity Order {
+    businessCode String required maxlength(20)
+    customerUserId String required
+    placedDate Instant required
+    totalTaxValue BigDecimal
+    totalDueValue BigDecimal
+    status OrderStatusEnum required
+    invoiceId Long
+    estimatedDeliveryDate Instant
+}
+
+entity OrderItem {
+    quantity Integer required min(0)
+    totalPrice BigDecimal required min(0)
+    status OrderItemStatusEnum required
+}
+
+
+enum CustomerStatusEnum {
+    UNDER_EVALUATION, ONBOARDING, READY_TO_START, WORKING, PENDENT, IN_FAILURE
+}
+
+enum SizeOptionEnum {
+    S, M, L, XL, XXL, 3XL
+}
+
+enum OrderStatusEnum {
+    COMPLETED, PENDING, CANCELLED
+}
+
+enum OrderItemStatusEnum {
+    AVAILABLE, OUT_OF_STOCK, BACK_ORDER
+}
+
+
+
+
+relationship ManyToOne {
+	OrderItem{article(customName) required} to Article(ordersItemsList)
+	Category{categoryParent(acronym)} to Category(childrenCategoriesList)
+
+    Customer{customerType(name)} to CustomerType
+    Customer{district(name)} to District
+
+}
+
+relationship OneToMany {
+   Order{ordersItemsList} to OrderItem{order(businessCode) required}
+   Category{articlesList} to Article{mainCategory(acronym)}
+}
+
+
+
+

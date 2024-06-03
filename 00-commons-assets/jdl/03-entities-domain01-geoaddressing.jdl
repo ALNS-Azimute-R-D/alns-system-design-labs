@@ -9,9 +9,7 @@
  * - Province
  * - TownCity 
  * - District
- * - Address
- * - Island
- * - GeorefLocalilty
+ * - Locality
 */
 
 
@@ -41,18 +39,13 @@ entity District(tb_district) {
     geoPolygonArea AnyBlob
 }
 
-entity Island(tb_island) {
-    acronym String maxlength(8)
-    name String required maxlength(40)
-    geoPolygonArea AnyBlob
-}
-
-entity GeorefLocalility(tb_georef_locality) {
+entity Locality(tb_locality) {
     acronym String required maxlength(8)
     name String required maxlength(840)
     description TextBlob
     geoPolygonArea AnyBlob
 }
+
 
 enum ContinentEnum {
     AFRICA, ASIA, EUROPE, OCEANIA, CENTRAL_AMERICA, NORTH_AMERICA, SOUTH_AMERICA
@@ -60,10 +53,10 @@ enum ContinentEnum {
 
 
 relationship ManyToOne {
-    Province{country(name) required} to Country{provinces},
-    TownCity{province(name) required} to Province{townCities},
-    District{townCity(name) required} to TownCity{districts},
-    Island{country(name) required} to Country{islands}
+    Province{country(name) required} to Country{provincesList},
+    TownCity{province(name) required} to Province{townCitiesList},
+    District{townCity(name) required} to TownCity{districtsList},
+    Locality{country(name) required} to Country{localitiesList}
 }
 
 

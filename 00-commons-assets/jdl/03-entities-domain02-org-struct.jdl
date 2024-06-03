@@ -15,6 +15,7 @@ entity Tenant(tb_tenant) {
     acronym String required maxlength(20)
     name String required maxlength(128)
     description String required maxlength(255)
+    customerBusinessCode String required maxlength(15)
     businessHandlerClazz String maxlength(512)
     mainContactPesonDetails TextBlob
     billingDetails TextBlob
@@ -33,6 +34,7 @@ entity TypeOfOrganization(tb_type_organization) {
 
 entity Organization(tb_organization) {
     acronym String required maxlength(20)
+    businessCode String required maxlength(15)
     hierarchicalLevel String maxlength(30)
     name String required minlength(2) maxlength(255)
     description String required maxlength(512)
@@ -46,6 +48,13 @@ entity Organization(tb_organization) {
     logoImg ImageBlob
 }
 
+entity BusinessUnit(tb_business_unit) {
+    acronym String required maxlength(20)
+    hierarchicalLevel String maxlength(30)
+    name String required minlength(2) maxlength(120)
+    activationStatus ActivationStatusEnum required
+}
+
 entity OrganizationDomain(tb_organization_domain) {
     domainAcronym String required maxlength(255)
     name String required minlength(2) maxlength(255)
@@ -54,13 +63,10 @@ entity OrganizationDomain(tb_organization_domain) {
     activationStatus ActivationStatusEnum required
 }
 
-entity BusinessUnit(tb_business_unit) {
-    acronym String required maxlength(20)
-    hierarchicalLevel String maxlength(30)
-    name String required minlength(2) maxlength(120)
-    activationStatus ActivationStatusEnum required
+entity OrganizationAttribute(tb_organization_attribute) {
+    attributeName String maxlength(255)
+    attributeValue String maxlength(4000
 }
-
 
 
 enum OrganizationStatusEnum {
@@ -72,10 +78,11 @@ enum ActivationStatusEnum {
 }
 
 relationship ManyToOne {
-    Organization{tenant(name) required} to Tenant{organizationsList},
-    Organization{typeOfOrganization(name) required} to TypeOfOrganization{organizationsList},
-    OrganizationDomain{organization(name) required} to Organization{organizationDomainsList},
-    BusinessUnit{organization(name) required} to Organization{businessesUnitsList},
+    Organization{tenant(name) required} to Tenant{organizationsList}
+    Organization{typeOfOrganization(name) required} to TypeOfOrganization{organizationsList}
+    OrganizationDomain{organization(name) required} to Organization{organizationDomainsList}
+    OrganizationAttribute{organization(name) required} to Organization{organizationAttributesList}
+    BusinessUnit{organization(name) required} to Organization{businessesUnitsList}
 
     Organization{organizationParent(name)} to Organization{childrenOrganizationsList}
     BusinessUnit{BusinessUnitParent(name)} to BusinessUnit{childrenBusinessUnitsList}

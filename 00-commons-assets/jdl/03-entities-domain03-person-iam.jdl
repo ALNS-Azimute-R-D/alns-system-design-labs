@@ -1,0 +1,79 @@
+/** *************************************
+/* Microservice: 03 - PersonMgmnt
+*  --> 
+/* ************************************* */
+
+
+/**
+ * - TypeOfPerson 
+ * - Person
+ * - OrganizationRole
+ * - OrganizationMembership
+ * - OrganizationMemberRole
+*/
+
+
+entity TypeOfPerson(tb_type_person) {
+    code String required maxlength(5)
+    description String required maxlength(40)
+}
+
+entity Person(tb_person) {
+    firstName String required maxlength(50)
+    lastName String required maxlength(80)
+    birthDate LocalDate required
+    gender GenderEnum required
+    codeBI String maxlength(20)
+    codeNIF String maxlength(20)
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
+    mainEmail String unique required maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    landPhoneNumber String maxlength(15)
+    mobilePhoneNumber String maxlength(15)
+    occupation String maxlength(40)
+    preferredLanguage String maxlength(5)
+    usernameInOAuth2 String maxlength(40)
+    userIdInOAuth2 String maxlength(80)
+    extraDetails TextBlob
+    activationStatus ActivationStatusEnum required
+    avatarImg ImageBlob
+}
+
+entity OrganizationRole(tb_organization_role) {
+    roleName String required maxlength(255)
+    activationStatus ActivationStatusEnum required
+}
+
+entity OrganizationMembership(tb_organization_membership) {
+    joinedAt LocalDate required
+    activationStatus ActivationStatusEnum required
+}
+
+entity OrganizationMemberRole(tb_organization_member_role) {
+    joinedAt LocalDate required
+}
+
+
+
+enum GenderEnum {
+    MALE, FEMALE, OTHER
+}
+
+
+relationship ManyToOne {
+    Person{typeOfPerson(code) required} to TypeOfPerson{personsList}
+    Person{district(name)} to District{personsList}
+    Person{managerPerson(lastName)} to Person{managedPersonsList}
+
+    OrganizationRole{organization(name) required} to Organization{organizationRolesList}
+    OrganizationMembership{organization(name) required} to Organization{organizationMembershipsList}
+    OrganizationMembership{person(lastName) required} to Person{organizationMembershipsList}
+
+    OrganizationMemberRole{organizationMembership required} to OrganizationMembership{organizationMemberRolesList}
+    OrganizationMemberRole{organizationRole required} to OrganizationRole{organizationMemberRolesList}
+
+}
+
+
