@@ -1,5 +1,5 @@
 /** *************************************
-/* Monolith :: Full - Quarkus with Java-11
+/* Monolith :: Full - Spring + Angular
 /* ************************************* */
 
 
@@ -7,9 +7,9 @@ application {
   config {
     applicationType monolith
     reactive false
-    baseName azimuteERPQuarkusAngularMonolith02
-    packageName de.org.dexterity.azimuteerp.monolith.quarkus
-    serverPort 8081
+    baseName azimuteERPSpringAngularMonolith01
+    packageName de.org.dexterity.azimuteerp.monolith
+    serverPort 8080
     buildTool maven
     authenticationType oauth2
     serviceDiscoveryType no
@@ -17,6 +17,7 @@ application {
     devDatabaseType postgresql
     prodDatabaseType postgresql
     enableHibernateCache true
+    cacheProvider ehcache
     clientFramework angular
     clientTheme united
     clientThemeVariant dark
@@ -27,7 +28,6 @@ application {
   }
   entities *
 }
-
 
 
 deployment {

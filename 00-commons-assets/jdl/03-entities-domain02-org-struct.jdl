@@ -17,7 +17,7 @@ entity Tenant(tb_tenant) {
     description String required maxlength(255)
     customerBusinessCode String required maxlength(15)
     businessHandlerClazz String maxlength(512)
-    mainContactPesonDetails TextBlob
+    mainContactPersonDetails TextBlob
     billingDetails TextBlob
     technicalEnvironmentsDetails TextBlob
     commonCustomAttributesDetails TextBlob
@@ -39,7 +39,7 @@ entity Organization(tb_organization) {
     name String required minlength(2) maxlength(255)
     description String required maxlength(512)
     businessHandlerClazz String maxlength(512)
-    mainContactPesonDetails TextBlob
+    mainContactPersonDetails TextBlob
     technicalEnvironmentsDetails TextBlob
     commonCustomAttributesDetails TextBlob
     organizationStatus OrganizationStatusEnum required
@@ -65,7 +65,7 @@ entity OrganizationDomain(tb_organization_domain) {
 
 entity OrganizationAttribute(tb_organization_attribute) {
     attributeName String maxlength(255)
-    attributeValue String maxlength(4000
+    attributeValue String maxlength(4000)
 }
 
 
@@ -77,15 +77,14 @@ enum ActivationStatusEnum {
     INACTIVE, ACTIVE, ON_HOLD, PENDENT, BLOCKED, INVALID
 }
 
+
 relationship ManyToOne {
     Organization{tenant(name) required} to Tenant{organizationsList}
     Organization{typeOfOrganization(name) required} to TypeOfOrganization{organizationsList}
     OrganizationDomain{organization(name) required} to Organization{organizationDomainsList}
     OrganizationAttribute{organization(name) required} to Organization{organizationAttributesList}
-    BusinessUnit{organization(name) required} to Organization{businessesUnitsList}
+    BusinessUnit{organization(name) required} to Organization{businessUnitsList}
 
     Organization{organizationParent(name)} to Organization{childrenOrganizationsList}
     BusinessUnit{BusinessUnitParent(name)} to BusinessUnit{childrenBusinessUnitsList}
 }
-
-

@@ -5,9 +5,7 @@
 service * with serviceImpl
 dto * with mapstruct
 
-
-filter Country, Province, TownCity, Locality, Organization, BusinessUnit, Person, Invoice, Payment, Product, Artist, Artwork, Journey, LocationNode, Venue, Activity, Event, Category, Article, Order, Asset
-
+// filter Country, Province, TownCity, Locality, Organization, BusinessUnit, Person, Invoice, Payment, Product, Artist, Artwork, Journey, LocationNode, Venue, Activity, Event, Category, Article, Order, Asset
 
 paginate * with pagination
 

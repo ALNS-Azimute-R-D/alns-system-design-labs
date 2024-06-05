@@ -57,7 +57,7 @@ enum StatusAssetEnum {
 }
 
 enum PreferredPurposeEnum {
-    USER_AVATAR, MONICET_ALBUM, OTHER
+    USER_AVATAR, LOGO_IMG, PHOTO_ALBUM, OTHER
 }
 
 
@@ -65,8 +65,8 @@ enum PreferredPurposeEnum {
 
 
 relationship ManyToOne {
-    RawAssetProcTmp{assetType(name) required} to AssetType{rawAssetsProcsTmps},
-    Asset{assetType(name) required} to AssetType{assets},
+    RawAssetProcTmp{assetType(name) required} to AssetType{rawAssetsProcsTmps}
+    Asset{assetType(name) required} to AssetType{assets}
     Asset{rawAssetProcTmp(name)} to RawAssetProcTmp{assets}
 }
 

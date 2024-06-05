@@ -39,7 +39,6 @@ entity PaymentMethod(tb_payment_method) {
 
 entity Payment(tb_payment) {
     installmentNumber Integer required
-    paymentMethod PaymentMethod required
     paymentDueDate Instant required
     paymentPaidDate Instant required
     paymentAmount BigDecimal required
@@ -56,7 +55,7 @@ enum InvoiceStatusEnum {
 }
 
 enum PaymentTypeEnum {
-    CREDIT, DEBIT, OTHER
+    CASH, CREDIT, DEBIT, BANK_TRANSFER, OTHER
 }
 
 enum PaymentStatusEnum {

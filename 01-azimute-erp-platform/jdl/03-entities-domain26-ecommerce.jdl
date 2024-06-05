@@ -30,8 +30,6 @@ entity CustomerType(tb_type_customer) {
     businessHandlerClazz String maxlength(255)
 }
 
-
-
 entity Category(tb_category) {
     acronym String maxlength(30)
     name String required maxlength(100)
@@ -72,7 +70,7 @@ enum CustomerStatusEnum {
 }
 
 enum SizeOptionEnum {
-    S, M, L, XL, XXL, 3XL
+    S, M, L, XL, XXL, XXXL
 }
 
 enum OrderStatusEnum {
@@ -87,11 +85,11 @@ enum OrderItemStatusEnum {
 
 
 relationship ManyToOne {
-	OrderItem{article(customName) required} to Article(ordersItemsList)
-	Category{categoryParent(acronym)} to Category(childrenCategoriesList)
+	OrderItem{article(customName) required} to Article{ordersItemsList}
+	Category{categoryParent(acronym)} to Category {childrenCategoriesList}
 
-    Customer{customerType(name)} to CustomerType
-    Customer{district(name)} to District
+    Customer{customerType(name)} to CustomerType{customersList}
+    Customer{district(name)} to District{customersList}
 
 }
 
