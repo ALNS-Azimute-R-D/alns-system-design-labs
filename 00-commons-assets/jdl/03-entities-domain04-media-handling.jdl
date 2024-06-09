@@ -42,7 +42,7 @@ entity AssetMetadata(tb_asset_metadata) {
     metadataDetailsJSON String maxlength(8192)
 }
 
-entity AssetCollection(tb_asset_collection) {
+entity AssetCollection(tb_assets_collection) {
     name String required maxlength(512)
     fullFilenamePath String maxlength(512)
     activationStatus ActivationStatusEnum required

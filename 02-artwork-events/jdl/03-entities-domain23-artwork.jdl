@@ -63,17 +63,17 @@ entity ArtworkCast(tb_artwork_cast) {
 
 
 relationship ManyToOne {
-    Artist{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artistsList},
-    Artist{typeOfArtist(acronym) required} to TypeOfArtist{artistsList},
-    Artwork{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artworksList},    
-    ArtworkCast{artwork(artworkTitle) required} to Artwork{artworkCastsList},
-    ArtworkCast{artist(publicName) required} to Artist{artworkCastsList},
-    Artist{artistAggregator(acronym)} to Artist{linkedArtistsList},
+    Artist{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artistsList}
+    Artist{typeOfArtist(acronym) required} to TypeOfArtist{artistsList}
+    Artwork{typeOfArtmedia(acronym) required} to TypeOfArtmedia{artworksList}
+    ArtworkCast{artwork(artworkTitle) required} to Artwork{artworkCastsList}
+    ArtworkCast{artist(publicName) required} to Artist{artworkCastsList}
+    Artist{artistAggregator(acronym)} to Artist{linkedArtistsList}
     Artwork{artworkAggregator(artworkTitle)} to Artwork{linkedArtworksList}
 }
 
 
 relationship ManyToMany {
-    Artist{artist} to ArtisticGenre(artisticGenre}
+    Artist{artist} to ArtisticGenre{artisticGenre}
 }
 

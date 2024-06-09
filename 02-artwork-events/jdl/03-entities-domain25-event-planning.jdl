@@ -139,7 +139,7 @@ relationship ManyToOne {
     EventProgram{responsiblePerson(fullname)} to Person {eventsProgramsList}
 
     ScheduledActivity{program(acronym)} to Program{scheduledActivitiesList}
-    ScheduledActivity{activity(acronym)} to Activity{scheduledActivitiesList}
+    ScheduledActivity{activity(name)} to Activity{scheduledActivitiesList}
     ScheduledActivity{responsiblePerson(fullname)} to Person{scheduledActivitiesList}
 
     TicketPurchased{event(acronym)} to Event{ticketsPurchasedList}
@@ -154,8 +154,8 @@ relationship ManyToOne {
 
 relationship ManyToMany {
     Event{assetCollection} to AssetCollection{event}
-    Activity{assetCollection} to AssetsCollection{activity}
-    ScheduledActivity{assetCollection} to AssetsCollection{scheduledActivity}
+    Activity{assetCollection} to AssetCollection{activity}
+    ScheduledActivity{assetCollection} to AssetCollection{scheduledActivity}
 
 }
 
