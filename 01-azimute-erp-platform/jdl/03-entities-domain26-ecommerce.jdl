@@ -14,14 +14,10 @@
 
 entity Customer(tb_customer) {
     customerBusinessCode String required maxlength(15)
-    name String required minlength(2) maxlength(80)
-    description TextBlob
-    email String unique required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
-    addressDetails String maxlength(255)
-    zipCode String maxlength(8)
-    keycloakGroupDetails String maxlength(1024)
-    status CustomerStatusEnum required
-    active Boolean required
+    fullname String required minlength(2) maxlength(80)
+    customAttributesDetailsJSON String maxlength(2048)
+    customerStatus CustomerStatusEnum required
+    activationStatus ActivationStatusEnum required
 }
 
 entity CustomerType(tb_type_customer) {
@@ -39,26 +35,25 @@ entity Category(tb_category) {
 
 entity Article(tb_article) {
     inventoryProductId Long required
+    skuCode String maxlength(60)
     customName String maxlength(150)
-    customDescription TextBlob
+    customDescription String maxlength(8192)
     priceValue BigDecimal
     itemSize SizeOptionEnum required
-    assetsCollectionUUID String maxlength(255)
-    isEnabled Boolean
+    activationStatus ActivationStatusEnum required
 }
 
-entity Order {
+entity Order(tb_order) {
     businessCode String required maxlength(20)
-    customerUserId String required
     placedDate Instant required
     totalTaxValue BigDecimal
     totalDueValue BigDecimal
     status OrderStatusEnum required
-    invoiceId Long
     estimatedDeliveryDate Instant
+    activationStatus ActivationStatusEnum required
 }
 
-entity OrderItem {
+entity OrderItem(tb_item_order) {
     quantity Integer required min(0)
     totalPrice BigDecimal required min(0)
     status OrderItemStatusEnum required
@@ -85,19 +80,27 @@ enum OrderItemStatusEnum {
 
 
 relationship ManyToOne {
+
+    Order{invoice(description)} to Invoice{ordersList}
+    Order{customer(fullname) required} to Customer{ordersList}
+
 	OrderItem{article(customName) required} to Article{ordersItemsList}
 	Category{categoryParent(acronym)} to Category {childrenCategoriesList}
 
+    Customer{buyerPerson(lastname) required} to Person{customersList}
     Customer{customerType(name)} to CustomerType{customersList}
     Customer{district(name)} to District{customersList}
 
 }
 
 relationship OneToMany {
-   Order{ordersItemsList} to OrderItem{order(businessCode) required}
+   Order{orderItemsList} to OrderItem{order(businessCode) required}
    Category{articlesList} to Article{mainCategory(acronym)}
 }
 
+relationship ManyToMany {
+    Article{assetCollection} to AssetCollection{article}
+}
 
 
 

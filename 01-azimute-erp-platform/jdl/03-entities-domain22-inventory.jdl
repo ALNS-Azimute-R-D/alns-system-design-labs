@@ -18,7 +18,7 @@
 entity Warehouse(tb_warehouse) {
     acronym String required maxlength(50)
     name String required minlength(2) maxlength(120)
-    description TextBlob
+    description String maxlength(1024)
     streetAddress String required maxlength(120)
     houseNumber String maxlength(20)
     locationName String maxlength(50)
@@ -28,15 +28,13 @@ entity Warehouse(tb_warehouse) {
     landPhoneNumber String maxlength(15)
     mobilePhoneNumber String maxlength(15)
     faxNumber String maxlength(15)
-    extraDetails TextBlob    
+    customAttributesDetailsJSON String maxlength(2048)
+    activationStatus ActivationStatusEnum required
 }
 
 entity Supplier(tb_supplier) {
     acronym String required maxlength(50)
     companyName String required minlength(2) maxlength(120)
-    representativeLastName String maxlength(50)
-    representativeFirstName String maxlength(50)
-    jobTitle String maxlength(50)
     streetAddress String required maxlength(120)
     houseNumber String maxlength(20)
     locationName String maxlength(50)
@@ -44,25 +42,25 @@ entity Supplier(tb_supplier) {
     stateProvince String maxlength(50)
     zipPostalCode String maxlength(15)
     countryRegion String maxlength(50)
-    webPage TextBlob,
     pointLocation AnyBlob
     mainEmail String maxlength(120) pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
-    landPhoneNumber String maxlength(15)
-    mobilePhoneNumber String maxlength(15)
-    faxNumber String maxlength(15)
-    extraDetails TextBlob    
+    phoneNumber1 String maxlength(15)
+    phoneNumber2 String maxlength(15)
+    customAttributesDetailsJSON String maxlength(2048)
+    activationStatus ActivationStatusEnum required
 }
 
 entity Brand(tb_brand) {
     acronym String required maxlength(20)
     name String required minlength(2) maxlength(120)
-    description TextBlob
+    description String maxlength(512)
+    logoBrand ImageBlob
 }
 
 entity Product(tb_product) {
     productSKU String maxlength(25)
     productName String maxlength(50)
-    description TextBlob
+    description String maxlength(512)
     standardCost BigDecimal
     listPrice BigDecimal required
     reorderLevel Integer
@@ -72,7 +70,7 @@ entity Product(tb_product) {
     minimumReorderQuantity Integer
     suggestedCategory String maxlength(50)
     attachments Blob
-    supplierIds TextBlob    
+    activationStatus ActivationStatusEnum required
 }
 
 entity InventoryTransaction(tb_inventory_transaction) {
@@ -80,13 +78,14 @@ entity InventoryTransaction(tb_inventory_transaction) {
     transactionCreatedDate Instant
     transactionModifiedDate Instant
     quantity Integer required
-    comments String maxlength(255)
+    transactionComments String maxlength(512)
+    activationStatus ActivationStatusEnum required
 }
 
 entity StockLevel(tb_stock_level) {
     lastModifiedDate Instant required
-    ramainingQuantity Integer required
-    extraDetails TextBlob
+    remainingQuantity Integer required
+    commonAttributesDetailsJSON String maxlength(2048)
 }
 
 
@@ -97,10 +96,11 @@ relationship ManyToOne {
     InventoryTransaction{warehouse(acronym) required} to Warehouse{inventoryTransactionsList}
     StockLevel{warehouse(acronym) required} to Warehouse{stockLevelsList}
     StockLevel{product(productName) required} to Product{stockLevelsList}
+    Supplier{representativePerson(lastname) required} to Person{suppliersList}
 }
 
 relationship ManyToMany {
-    Supplier{productsList} to Product{suppliersList}
+    Product{toSupplier} to Supplier{toProduct}
 }
 
 

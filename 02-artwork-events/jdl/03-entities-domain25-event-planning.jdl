@@ -26,16 +26,12 @@ entity TypeOfEvent(tb_type_event) {
     handlerClazzName String maxlength(255)
 }
 
-
-
 entity TypeOfVenue(tb_type_venue) {
     acronym String maxlength(30)
     name String required maxlength(100)
     description String maxlength(255)
     handlerClazzName String maxlength(255)
 }
-
-
 
 entity TypeOfActivity(tb_type_activity) {
     acronym String maxlength(30)
@@ -44,87 +40,66 @@ entity TypeOfActivity(tb_type_activity) {
     handlerClazzName String maxlength(255)
 }
 
-
-
 entity Venue(tb_venue) {
     acronym String maxlength(30)
     name String required maxlength(100)
     description String maxlength(255)
-    localityId Long
     geoPointLocation AnyBlob
 }
 
-
-
 entity Activity(tb_activity) {
     name String required maxlength(120)
-    shortDescription String maxlength(255)
-    fullDescription TextBlob
-    mainGoals String maxlength(255)
+    shortDescription String maxlength(512)
+    fullDescription String maxlength(2048)
+    mainGoals String maxlength(1024)
     estimatedDurationTime Duration
     lastPerformedDate LocalDate
-    createdByUserId String
-    createdWhen Instant
-    assetsCollectionUUID String maxlength(255)
+    createdAt Instant
+    activationStatus ActivationStatusEnum required
 }
-
-
 
 entity Event(tb_event) {
     acronym String maxlength(50)
     name String required maxlength(150)
     description String required maxlength(255)
-    fullDescription TextBlob
+    fullDescription String maxlength(2048)
     startTime Instant required
     endTime Instant
-    promoteurPersonId Long
-    assetsCollectionUUID String maxlength(255)
     defaultTicketValue BigDecimal required
     status EventStatusEnum required
+    activationStatus ActivationStatusEnum required
 }
-
-
 
 entity Program(tb_program) {
     acronym String maxlength(30)
     name String required maxlength(100)
     description String maxlength(255)
-    fullDescription TextBlob
+    fullDescription String maxlength(2048)
     targetPublic String
-    isActive Boolean required
+    activationStatus ActivationStatusEnum required
 }
-
-
 
 entity EventProgram(tb_event_program) {
-    responsiblePersonId Long
     percentageExecution Double
 }
-
 
 entity ScheduledActivity(tb_scheduled_activity) {
     customizedName String maxlength(150)
     startTime Instant required
     endTime Instant
     numberOfAttendees Integer
-    status ActivityStatusEnum
-    averageEvaluationInStars Integer 
-    extraDetails TextBlob
-    assetsCollectionUUID String maxlength(255)
+    averageEvaluationInStars Integer
+    customAttributtesDetailsJSON String maxlength(4096)
+    activationStatus ActivationStatusEnum required
 }
 
-
-
 entity EventAttendee(tb_event_attendee) {
-    attendeeUserId Long required
     attendedAsRole String required maxlength(30)
     wasPresentInEvent Boolean
     shouldBuyTicket Boolean
     ticketNumber String maxlength(20)
     seatNumber String maxlength(10)
 }
-
-
 
 entity TicketPurchased(tb_ticket_purchased) {
     buyingCode String maxlength(30)
@@ -134,7 +109,6 @@ entity TicketPurchased(tb_ticket_purchased) {
     ticketValue BigDecimal
     acquiredSeatsNumbers String maxlength(50)
     description String maxlength(255)
-    invoiceId Long
 }
 
 
@@ -149,23 +123,39 @@ enum EventStatusEnum {
 
 
 relationship ManyToOne {
-    Event{typeOfEvent(acronym) required} to TypeOfEvent{eventsList},
-    Venue{typeOfVenue(acronym) required} to TypeOfVenue{venuesList},
-    Activity{typeOfActivity(acronym) required} to TypeOfActivity{activitiesList},
 
-    Event{mainVenue(acronym)} to Venue{eventsList},
+    Venue{typeOfVenue(acronym) required} to TypeOfVenue{venuesList}
+    Venue{commonLocality(name)} to CommonLocality{venuesList}
 
-    EventProgram{event(acronym)} to Event{eventProgramsList},
-    EventProgram{program(acronym)} to Program{programsList},    
+    Activity{typeOfActivity(acronym) required} to TypeOfActivity{activitiesList}
+    Activity{createdByUser(fullname)} to Person{activitiesList}
 
-    ScheduledActivity{program(acronym)} to Program{programsList},
-    ScheduledActivity{activity(acronym)} to Activity{activitiesList},    
+    Event{mainVenue(acronym)} to Venue{eventsList}
+    Event{typeOfEvent(acronym) required} to TypeOfEvent{eventsList}
+    Event{promoteurPerson(fullname)} to Person{promotedEventsList}
 
-    TicketPurchased{event(acronym)} to Event{ticketsPurchasedList},
+    EventProgram{event(acronym)} to Event{eventProgramsList}
+    EventProgram{program(acronym)} to Program{programsList}
+    EventProgram{responsiblePerson(fullname)} to Person {eventsProgramsList}
 
-    EventAttendee{event(acronym)} to Event{eventAttendeesList},
+    ScheduledActivity{program(acronym)} to Program{scheduledActivitiesList}
+    ScheduledActivity{activity(acronym)} to Activity{scheduledActivitiesList}
+    ScheduledActivity{responsiblePerson(fullname)} to Person{scheduledActivitiesList}
+
+    TicketPurchased{event(acronym)} to Event{ticketsPurchasedList}
+    TicketPurchased{invoice} to Invoice{ticketsPurchasedList}
+
+    EventAttendee{attendeePerson(fullname)} to Person{eventAttendeesList}
+
+    EventAttendee{event(acronym)} to Event{eventAttendeesList}
     EventAttendee{ticketPurchased(buyingCode)} to TicketPurchased{eventAttendeesList}
 
 }
 
+relationship ManyToMany {
+    Event{assetCollection} to AssetCollection{event}
+    Activity{assetCollection} to AssetsCollection{activity}
+    ScheduledActivity{assetCollection} to AssetsCollection{scheduledActivity}
+
+}
 

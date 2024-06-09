@@ -8,8 +8,8 @@ application {
     applicationType monolith
     reactive false
     baseName azimuteERPQuarkusAngularMonolith02
-    packageName de.org.dexterity.azimuteerp.monolith.quarkus
-    serverPort 8081
+    packageName org.dexterity.darueira.azimuteerp.monolith.quarkus
+    serverPort 18080
     buildTool maven
     authenticationType oauth2
     serviceDiscoveryType no
@@ -18,7 +18,7 @@ application {
     prodDatabaseType postgresql
     enableHibernateCache true
     clientFramework angular
-    clientTheme united
+    clientTheme solar
     clientThemeVariant dark
     enableTranslation true
     nativeLanguage en

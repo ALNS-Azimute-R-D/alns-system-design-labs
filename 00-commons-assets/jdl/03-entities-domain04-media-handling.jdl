@@ -17,7 +17,7 @@ entity AssetType(tb_type_asset) {
     name String required maxlength(100)
     description String maxlength(255)
     handlerClazzName String maxlength(255)
-    extraDetails TextBlob
+    customAttributesDetailsJSON String maxlength(2048)
 }
 
 entity RawAssetProcTmp(tb_raw_asset_proc_tmp) {
@@ -25,21 +25,27 @@ entity RawAssetProcTmp(tb_raw_asset_proc_tmp) {
     statusRawProcessing StatusRawProcessingEnum
     fullFilenamePath String maxlength(512)
     assetRawContentAsBlob Blob
-    extraDetails TextBlob
+    customAttributesDetailsJSON String maxlength(4096)
 }
 
 entity Asset(tb_asset) {
-    uid UUID
-    name String required maxlength(255)
+    name String required maxlength(512)
     storageTypeUsed StorageTypeEnum
     fullFilenamePath String maxlength(512)
     status StatusAssetEnum
     preferredPurpose PreferredPurposeEnum
     assetContentAsBlob Blob
+    activationStatus ActivationStatusEnum required
 }
 
 entity AssetMetadata(tb_asset_metadata) {
-    metadataDetails TextBlob
+    metadataDetailsJSON String maxlength(8192)
+}
+
+entity AssetCollection(tb_asset_collection) {
+    name String required maxlength(512)
+    fullFilenamePath String maxlength(512)
+    activationStatus ActivationStatusEnum required
 }
 
 
@@ -57,7 +63,7 @@ enum StatusAssetEnum {
 }
 
 enum PreferredPurposeEnum {
-    USER_AVATAR, LOGO_IMG, PHOTO_ALBUM, OTHER
+    USER_AVATAR, LOGO_IMG, PHOTO_ALBUM, ANY_OFFICE_FILE_TYPE, EXECUTABLE_PROGRAM_BINARY, OTHER
 }
 
 
@@ -74,3 +80,6 @@ relationship OneToOne {
     AssetMetadata{asset(name) required} to Asset{assetMetadata}
 }
 
+relationship ManyToMany {
+    AssetCollection{asset} to Asset{assetCollection}
+}

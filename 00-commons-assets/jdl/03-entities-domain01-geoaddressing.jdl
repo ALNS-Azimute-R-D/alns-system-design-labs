@@ -39,10 +39,14 @@ entity District(tb_district) {
     geoPolygonArea AnyBlob
 }
 
-entity Locality(tb_locality) {
-    acronym String required maxlength(8)
+entity CommonLocality(tb_common_locality) {
+    acronym String required maxlength(20)
     name String required maxlength(840)
-    description TextBlob
+    description String maxlength(512)
+    streetAddress String required maxlength(120)
+    houseNumber String maxlength(20)
+    locationName String maxlength(50)
+    postalCode String required maxlength(9)
     geoPolygonArea AnyBlob
 }
 
@@ -56,7 +60,7 @@ relationship ManyToOne {
     Province{country(name) required} to Country{provincesList},
     TownCity{province(name) required} to Province{townCitiesList},
     District{townCity(name) required} to TownCity{districtsList},
-    Locality{country(name) required} to Country{localitiesList}
+    CommonLocality{district(name) required} to District{commonLocalitiesList}
 }
 
 

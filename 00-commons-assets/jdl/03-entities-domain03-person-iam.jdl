@@ -15,12 +15,13 @@
 
 entity TypeOfPerson(tb_type_person) {
     code String required maxlength(5)
-    description String required maxlength(40)
+    description String required maxlength(80)
 }
 
 entity Person(tb_person) {
-    firstName String required maxlength(50)
-    lastName String required maxlength(80)
+    firstname String required maxlength(50)
+    lastname String required maxlength(50)
+    fullname String maxlength(100)
     birthDate LocalDate required
     gender GenderEnum required
     codeBI String maxlength(20)
@@ -36,7 +37,7 @@ entity Person(tb_person) {
     preferredLanguage String maxlength(5)
     usernameInOAuth2 String maxlength(40)
     userIdInOAuth2 String maxlength(80)
-    extraDetails TextBlob
+    customAttributesDetailsJSON String maxlength(2048)
     activationStatus ActivationStatusEnum required
     avatarImg ImageBlob
 }
@@ -65,11 +66,11 @@ enum GenderEnum {
 relationship ManyToOne {
     Person{typeOfPerson(code) required} to TypeOfPerson{personsList}
     Person{district(name)} to District{personsList}
-    Person{managerPerson(lastName)} to Person{managedPersonsList}
+    Person{managerPerson(lastname)} to Person{managedPersonsList}
 
     OrganizationRole{organization(name) required} to Organization{organizationRolesList}
     OrganizationMembership{organization(name) required} to Organization{organizationMembershipsList}
-    OrganizationMembership{person(lastName) required} to Person{organizationMembershipsList}
+    OrganizationMembership{person(lastname) required} to Person{organizationMembershipsList}
 
     OrganizationMemberRole{organizationMembership required} to OrganizationMembership{organizationMemberRolesList}
     OrganizationMemberRole{organizationRole required} to OrganizationRole{organizationMemberRolesList}

@@ -13,7 +13,6 @@
 
 entity Invoice(tb_invoice) {
     businessCode String required maxlength(15)
-    originalOrderId Long
     invoiceDate Instant
     dueDate Instant
     description String required maxlength(80)
@@ -24,18 +23,16 @@ entity Invoice(tb_invoice) {
     numberOfInstallmentsPaid Integer    
     amountPaidValue BigDecimal  
     status InvoiceStatusEnum required
-    extraDetails TextBlob
+    customAttributesDetailsJSON String maxlength(4096)
+    activationStatus ActivationStatusEnum required
 }
 
-
-
-entity PaymentMethod(tb_payment_method) {
-    code String required maxlength(10)
-    description String required maxlength(40)
-    businessHandlerClazz String maxlength(512)    
+entity PaymentGateway(tb_payment_gateway) {
+    aliasCode String required maxlength(20)
+    description String required maxlength(120)
+    businessHandlerClazz String maxlength(512)
+    activationStatus ActivationStatusEnum required
 }
-
-
 
 entity Payment(tb_payment) {
     installmentNumber Integer required
@@ -43,8 +40,9 @@ entity Payment(tb_payment) {
     paymentPaidDate Instant required
     paymentAmount BigDecimal required
     typeOfPayment PaymentTypeEnum required    
-    status PaymentStatusEnum required
-    extraDetails TextBlob
+    statusPayment PaymentStatusEnum required
+    customAttributesDetailsJSON String maxlength(2048)
+    activationStatus ActivationStatusEnum required
 }
 
 
@@ -64,11 +62,9 @@ enum PaymentStatusEnum {
 
 
 
-
-
 relationship ManyToOne {
-    Invoice{preferrablePaymentMethod(code)} to PaymentMethod{invoicesAsPreferrableList},
-    Payment{paymentMethod(code) required} to PaymentMethod{paymentsList}    
+    Invoice{preferrablePaymentGateway(aliasCode)} to PaymentGateway{invoicesAsPreferrableList},
+    Payment{paymentGateway(aliasCode) required} to PaymentGateway{paymentsList}
 }
 
 

@@ -17,10 +17,10 @@ entity Tenant(tb_tenant) {
     description String required maxlength(255)
     customerBusinessCode String required maxlength(15)
     businessHandlerClazz String maxlength(512)
-    mainContactPersonDetails TextBlob
-    billingDetails TextBlob
-    technicalEnvironmentsDetails TextBlob
-    commonCustomAttributesDetails TextBlob
+    mainContactPersonDetailsJSON String maxlength(2048)
+    billingDetailsJSON String maxlength(2048)
+    technicalEnvironmentsDetailsJSON String maxlength(4096)
+    customAttributesDetailsJSON String maxlength(4096)
     logoImg ImageBlob
     activationStatus ActivationStatusEnum required
 }
@@ -28,7 +28,7 @@ entity Tenant(tb_tenant) {
 entity TypeOfOrganization(tb_type_organization) {
     acronym String required maxlength(20)
     name String required maxlength(255)
-    description TextBlob required
+    description String maxlength(128) required
     businessHandlerClazz String maxlength(512)    
 }
 
@@ -39,9 +39,9 @@ entity Organization(tb_organization) {
     name String required minlength(2) maxlength(255)
     description String required maxlength(512)
     businessHandlerClazz String maxlength(512)
-    mainContactPersonDetails TextBlob
-    technicalEnvironmentsDetails TextBlob
-    commonCustomAttributesDetails TextBlob
+    mainContactPersonDetailsJSON String maxlength(2048)
+    technicalEnvironmentsDetailsJSON String maxlength(4096)
+    customAttributesDetailsJSON String maxlength(4096)
     organizationStatus OrganizationStatusEnum required
     businessHandlerClazz String maxlength(512)
     activationStatus ActivationStatusEnum required
@@ -65,7 +65,7 @@ entity OrganizationDomain(tb_organization_domain) {
 
 entity OrganizationAttribute(tb_organization_attribute) {
     attributeName String maxlength(255)
-    attributeValue String maxlength(4000)
+    attributeValue String maxlength(4096)
 }
 
 

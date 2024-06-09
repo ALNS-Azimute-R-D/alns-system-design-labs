@@ -19,33 +19,27 @@
 entity TypeOfArtmedia(tb_artmedia_type) {
     acronym String required maxlength(50)
     name String required minlength(2) maxlength(120)
-    description TextBlob
+    description String required maxlength(512)
 }
-
-
 
 entity TypeOfArtist(tb_artmedia_type) {
     acronym String required maxlength(50)
     name String required minlength(2) maxlength(120)
+    description String required maxlength(120)
 }
-
-
 
 entity ArtisticGenre(tb_artistic_genre) {
     acronym String required maxlength(50)
     name String required minlength(2) maxlength(120)
+    description String required maxlength(120)
 }
-
-
 
 entity Artist(tb_artist) {
     acronym String required maxlength(50)
     publicName String required minlength(2) maxlength(120)
     realName String minlength(2) maxlength(120)
-    biographyDetails TextBlob
+    biographyDetailsJSON String maxlength(2048)
 }
-
-
 
 entity Artwork(tb_artwork) {
     artworkTitle String required minlength(2) maxlength(255)
@@ -54,16 +48,14 @@ entity Artwork(tb_artwork) {
     episodeOrSequenceNumber Integer
     registerIdInIMDB String maxlength(50)
     assetsCollectionUUID String maxlength(255)
-    contentDetails TextBlob
+    contentDetailsJSON String maxlength(4096)
 }
-
-
 
 entity ArtworkCast(tb_artwork_cast) {
     orderOfAppearance Integer
     characterName String minlength(2) maxlength(255)
     mainAssetUUID String maxlength(255)
-    characterDetails TextBlob
+    characterDetailsJSON String maxlength(2048)
 }
 
 
@@ -82,6 +74,6 @@ relationship ManyToOne {
 
 
 relationship ManyToMany {
-    Artist{artisticsGenresList} to ArtisticGenre(artistsList}
+    Artist{artist} to ArtisticGenre(artisticGenre}
 }
 
