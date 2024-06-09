@@ -1,0 +1,48 @@
+/** *************************************
+/* Monolith :: Full - Spring + React
+/* ************************************* */
+
+
+application {
+  config {
+    applicationType monolith
+    reactive false
+    baseName azimuteERPSpringVueMonolith04
+    packageName org.dexterity.darueira.azimuteerp.monolith.springvue
+    serverPort 8083
+    buildTool maven
+    authenticationType oauth2
+    serviceDiscoveryType no
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    enableHibernateCache true
+    cacheProvider ehcache
+    clientFramework vue
+    clientTheme lux
+    clientThemeVariant dark
+    enableTranslation true
+    nativeLanguage en
+    languages [pt-pt, pt-br, en, de, es, fr]
+    testFrameworks [cypress, gatling]
+  }
+  entities *
+}
+
+
+deployment {
+  deploymentType docker-compose
+  dockerRepositoryName "scout23df"
+  monitoring yes
+}
+
+
+deployment {
+  deploymentType kubernetes
+  monitoring yes
+  kubernetesNamespace azimuteerp-platform
+  kubernetesUseDynamicStorage true
+  kubernetesStorageClassName ""
+  dockerRepositoryName "scout23df"
+}
+
